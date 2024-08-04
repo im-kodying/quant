@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  quant:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: quant_container
+    command: ["./target/release/quant"]
+
+  buck2:
+    image: chainguard/buck2:latest
+    container_name: buck2_container
+    command: ["sleep", "infinity"]
+
+  new_service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: new_service_container
+    command: ["./target/release/new_service"]
