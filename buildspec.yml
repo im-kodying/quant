@@ -4,6 +4,8 @@ env:
   variables:
     AWS_DEFAULT_REGION: "us-east-2"  # Set your AWS region here
     AWS_ACCOUNT_ID: "009160041388"   # Set your AWS account ID here
+    IMAGE_REPO_NAME: "quant-env"
+    IMAGE_TAG: "latest"
 
 phases:
   pre_build:
