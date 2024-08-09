@@ -4,3 +4,9 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+ibkr_client_portal = "1.0.1"
+tokio = { version = "1.0.0", features = ["rt", "rt-multi-thread", "macros"] }
+
+[[bin]]
+name = "quant"
+path = "src/main.rs"
