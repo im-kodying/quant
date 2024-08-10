@@ -3,9 +3,8 @@ services:
   ib-gateway:
     restart: always
     build:
-      context: ./
-      tags:
-        - "ghcr.io/gnzsnz/ib-gateway:stable"
+      context: .
+      dockerfile: Dockerfile
     image: quant-env:latest
     environment:
       TWS_USERID: ${TWS_USERID}
@@ -36,11 +35,6 @@ services:
       SSH_USER_TUNNEL: ${SSH_USER_TUNNEL:-}
       SSH_RESTART: ${SSH_RESTART:-}
       SSH_VNC_PORT: ${SSH_VNC_PORT:-}
-    #    volumes:
-    #      - ${PWD}/jts.ini:/home/ibgateway/Jts/jts.ini
-    #      - ${PWD}/config.ini:/home/ibgateway/ibc/config.ini
-    #      - ${PWD}/tws_settings/:${TWS_SETTINGS_PATH:-/home/ibgateway/Jts}
-    #      - ${PWD}/ssh/:/home/ibgateway/.ssh
     ports:
       - "127.0.0.1:4001:4003"
       - "127.0.0.1:4002:4004"

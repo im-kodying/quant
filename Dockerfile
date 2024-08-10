@@ -5,10 +5,10 @@ FROM --platform=linux/amd64 rust:latest AS builder
 WORKDIR /quant
 
 # Copy the Cargo.toml and Cargo.lock files to the container
-COPY ./quant/Cargo.toml ./quant/Cargo.lock ./
+COPY quant/Cargo.toml quant/Cargo.lock ./
 
 # Copy the source code to the container
-COPY ./quant/src ./src
+COPY quant/src ./src
 
 # Build the dependencies to cache them
 RUN cargo build --release
