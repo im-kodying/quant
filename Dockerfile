@@ -29,10 +29,11 @@ WORKDIR /quant
 COPY --from=builder /quant/target/release/quant /quant
 
 # Copy the ib-gateway executable from the ib-gateway stage
-COPY --from=ib-gateway /usr/local/bin/ib-gateway /usr/local/bin/ib-gateway
+COPY --from=ib-gateway /. /usr/local/bin/ib-gateway
 
 # Ensure the built executables have execute permissions
-RUN chmod +x /quant/quant /usr/local/bin/ib-gateway
+RUN chmod +x /quant/quant
+RUN chmod +x /usr/local/bin/ib-gateway
 
 # Set the entry point to run ib-gateway first, then quant
 CMD ["sh", "-c", "/usr/local/bin/ib-gateway && ./quant"]
