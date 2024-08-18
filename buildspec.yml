@@ -1,5 +1,3 @@
-version: 0.2
-
 env:
   variables:
     AWS_DEFAULT_REGION: "us-east-2"  # Set your AWS region here
