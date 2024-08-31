@@ -12,7 +12,7 @@ ENV PYTHONUNBUFFERED=1 \
     RUST_TOOLCHAIN="stable" \
     BUILD_MODE="release"
 ENV PATH="/root/.cargo/bin:$POETRY_HOME/bin:$PATH"
-WORKDIR $PYSETUP_PATH
+WORKDIR /
 
 FROM base as builder
 
@@ -33,14 +33,14 @@ COPY nautilus_trader/poetry.lock nautilus_trader/pyproject.toml nautilus_trader/
 RUN poetry install --no-root --only main
 
 # Build nautilus_trader
-COPY nautilus_trader/nautilus_core ./nautilus_core
-RUN (cd nautilus_core && cargo build --release --all-features)
+COPY nautilus_trader/nautilus_core /opt/pysetup/nautilus_core
+RUN (cd /opt/pysetup/nautilus_core && cargo build --release --all-features)
 
-COPY nautilus_trader ./nautilus_trader
-COPY README.md ./
+COPY nautilus_trader /opt/pysetup/nautilus_trader
+COPY README.md /opt/pysetup/
 RUN poetry install --only main --all-extras
 RUN poetry build -f wheel
-RUN python -m pip install ./dist/*whl --force --no-deps
+RUN python -m pip install /opt/pysetup/dist/*whl --force --no-deps
 RUN find /usr/local/lib/python3.12/site-packages -name "*.pyc" -exec rm -f {} \;
 
 # Final application image
