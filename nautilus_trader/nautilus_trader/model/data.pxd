@@ -221,6 +221,52 @@ cdef class BookOrder:
     cdef dict to_dict_c(BookOrder obj)
 
 
+cdef class OrderBookDelta(Data):
+    cdef OrderBookDelta_t _mem
+
+    @staticmethod
+    cdef OrderBookDelta from_raw_c(
+        InstrumentId instrument_id,
+        BookAction action,
+        OrderSide side,
+        int64_t price_raw,
+        uint8_t price_prec,
+        uint64_t size_raw,
+        uint8_t size_prec,
+        uint64_t order_id,
+        uint8_t flags,
+        uint64_t sequence,
+        uint64_t ts_event,
+        uint64_t ts_init,
+    )
+
+    @staticmethod
+    cdef OrderBookDelta from_mem_c(OrderBookDelta_t mem)
+
+    @staticmethod
+    cdef OrderBookDelta from_pyo3_c(pyo3_delta)
+
+    @staticmethod
+    cdef OrderBookDelta from_dict_c(dict values)
+
+    @staticmethod
+    cdef dict to_dict_c(OrderBookDelta obj)
+
+    @staticmethod
+    cdef OrderBookDelta clear_c(
+        InstrumentId instrument_id,
+        uint64_t sequence,
+        uint64_t ts_event,
+        uint64_t ts_init,
+    )
+
+    @staticmethod
+    cdef list capsule_to_list_c(capsule)
+
+    @staticmethod
+    cdef object list_to_capsule_c(list items)
+
+
 cdef class OrderBookDeltas(Data):
     cdef OrderBookDeltas_API _mem
 
