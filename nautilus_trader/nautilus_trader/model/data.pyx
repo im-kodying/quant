@@ -112,6 +112,7 @@ from nautilus_trader.core.string cimport cstr_to_pystr
 from nautilus_trader.core.string cimport pystr_to_cstr
 from nautilus_trader.core.string cimport ustr_to_pystr
 from nautilus_trader.model.data cimport BarAggregation
+from nautilus_trader.model.data cimport OrderBookDelta
 from nautilus_trader.model.functions cimport aggregation_source_from_str
 from nautilus_trader.model.functions cimport aggressor_side_from_str
 from nautilus_trader.model.functions cimport aggressor_side_to_str
