@@ -16,6 +16,8 @@ WORKDIR /
 
 FROM base as builder
 
+WORKDIR nautilus_trader
+
 # Install build deps
 RUN apt-get update && \
     apt-get install -y curl clang git libssl-dev make pkg-config && \
