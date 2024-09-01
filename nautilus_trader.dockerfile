@@ -33,11 +33,11 @@ RUN curl -sSL https://install.python-poetry.org | python3 -
 RUN ls -l .
 
 # Install package requirements (split step and with --no-root to enable caching)
-COPY poetry.lock pyproject.toml nautilus_trader/build.py ./
+COPY nautilus_trader/poetry.lock nautilus_trader/pyproject.toml nautilus_trader/build.py ./
 RUN poetry install --no-root --only main
 
 # Build nautilus_trader
-COPY nautilus_core/ /opt/pysetup/nautilus_core
+COPY nautilus_trader/nautilus_core/ /opt/pysetup/nautilus_core
 RUN (cd /opt/pysetup/nautilus_core && cargo build --release --all-features)
 
 COPY nautilus_trader/ /opt/pysetup/nautilus_trader
