@@ -21,7 +21,7 @@ phases:
       - export BUILDKIT_PROGRESS=plain
       - export PROGRESS_NO_TRUNC=1
       - cd nautilus_trader/
-      - docker build -f=nautilus_trader.dockerfile -m=36g -t $IMAGE_REPO_NAME:$IMAGE_TAG --progress=plain --no-cache .
+      - docker build -f=nautilus_trader.dockerfile -m=36g -t $IMAGE_REPO_NAME:$IMAGE_TAG --progress=plain .
       - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
   post_build:
     commands:
