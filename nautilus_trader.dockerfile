@@ -30,15 +30,17 @@ RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
 # Install Poetry
 RUN curl -sSL https://install.python-poetry.org | python3 -
 
+RUN echo "$(ls)"
+
 # Install package requirements (split step and with --no-root to enable caching)
 COPY poetry.lock pyproject.toml nautilus_trader/build.py ./
 RUN poetry install --no-root --only main
 
 # Build nautilus_trader
-COPY nautilus_core /opt/pysetup/nautilus_core
+COPY nautilus_core/ /opt/pysetup/nautilus_core
 RUN (cd /opt/pysetup/nautilus_core && cargo build --release --all-features)
 
-COPY nautilus_trader /opt/pysetup/nautilus_trader
+COPY nautilus_trader/ /opt/pysetup/nautilus_trader
 COPY README.md /opt/pysetup/
 RUN poetry install --only main --all-extras
 RUN poetry build -f wheel
