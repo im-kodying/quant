@@ -221,7 +221,7 @@ cdef class BookOrder:
     cdef dict to_dict_c(BookOrder obj)
 
 
-cdef class OrderBookDelta(Data):
+cdef extern class OrderBookDelta(Data):
     cdef OrderBookDelta_t _mem
 
     @staticmethod
