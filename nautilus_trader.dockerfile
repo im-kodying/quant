@@ -31,15 +31,15 @@ RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
 RUN curl -sSL https://install.python-poetry.org | python3 -
 
 # Install package requirements (split step and with --no-root to enable caching)
-COPY poetry.lock pyproject.toml build.py ./
+COPY nautilus_trader/poetry.lock nautilus_trader/pyproject.toml nautilus_trader/build.py ./
 RUN poetry install --no-root --only main
 
 # Build nautilus_trader
-COPY nautilus_core ./nautilus_core
+COPY nautilus_trader/nautilus_core ./nautilus_core
 RUN (cd nautilus_core && cargo build --release --all-features)
 
-COPY nautilus_trader ./nautilus_trader
-COPY README.md ./
+COPY nautilus_trader/nautilus_trader ./nautilus_trader
+COPY nautilus_trader/README.md ./
 RUN poetry install --only main --all-extras
 RUN poetry build -f wheel
 RUN python -m pip install ./dist/*whl --force --no-deps
@@ -49,3 +49,7 @@ RUN find /usr/local/lib/python3.12/site-packages -name "*.pyc" -exec rm -f {} \;
 FROM base AS application
 
 COPY --from=builder /usr/local/lib/python3.12/site-packages /usr/local/lib/python3.12/site-packages
+
+COPY main.py .
+
+CMD ["python3", "main.py"]
