@@ -52,4 +52,4 @@ COPY --from=builder /usr/local/lib/python3.12/site-packages /usr/local/lib/pytho
 
 COPY main.py .
 
-CMD ["python3", "main.py"]
+CMD ["python", "main.py"]
