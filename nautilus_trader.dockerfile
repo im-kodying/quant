@@ -1,3 +1,5 @@
+FROM gcr.io/kaniko-project/executor:v0.12.0 AS kaniko
+
 FROM python:3.12-slim AS base
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
@@ -12,7 +14,8 @@ ENV PYTHONUNBUFFERED=1 \
     PYSETUP_PATH="/opt/pysetup" \
     RUST_TOOLCHAIN="stable" \
     BUILD_MODE="release" \
-    CC="clang"
+    CC="clang" \
+    DOCKER_CONFIG="/kaniko/.docker"
 ENV PATH="/root/.cargo/bin:$POETRY_HOME/bin:$PATH"
 WORKDIR $PYSETUP_PATH
 
@@ -52,17 +55,6 @@ COPY --from=builder /usr/local/lib/python3.12/site-packages /usr/local/lib/pytho
 
 COPY main.py .
 
-USER root
-RUN groupadd -r dockeruser &&\
-    useradd -r -g dockeruser -m -d /home/dockeruser -s /sbin/nologin dockeruser
-RUN usermod -aG sudo dockeruser
-RUN chown -R dockeruser:dockeruser /home/dockeruser
-ENV HOME=/home/dockeruser
-
-RUN groupadd docker
-RUN gpasswd -a dockeruser docker
-USER dockeruser
-RUN chmod g+s /home/dockeruser
-VOLUME /var/run/docker.sock
+COPY --from=kaniko /kaniko /kaniko
 
 CMD ["python", "main.py"]
