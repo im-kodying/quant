@@ -14,9 +14,7 @@ ENV PYTHONUNBUFFERED=1 \
     BUILD_MODE="release" \
     CC="clang"
 ENV PATH="/root/.cargo/bin:$POETRY_HOME/bin:$PATH"
-RUN groupadd -o -g 994 dockersock
-RUN usermod -aG dockersock "runner"
-WORKDIR $PYSETUP_PATH43
+WORKDIR $PYSETUP_PATH
 
 FROM base AS builder
 
@@ -53,5 +51,18 @@ FROM base AS application
 COPY --from=builder /usr/local/lib/python3.12/site-packages /usr/local/lib/python3.12/site-packages
 
 COPY main.py .
+
+USER root
+RUN groupadd -r dockeruser &&\
+    useradd -r -g dockeruser -m -d /home/dockeruser -s /sbin/nologin dockeruser
+RUN usermod -aG sudo dockeruser
+RUN chown -R dockeruser:dockeruser /home/dockeruser
+ENV HOME=/home/dockeruser
+
+RUN groupadd docker
+RUN gpasswd -a dockeruser docker
+USER dockeruser
+RUN chmod g+s /home/dockeruser
+VOLUME /var/run/docker.sock
 
 CMD ["python", "main.py"]
