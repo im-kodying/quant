@@ -60,15 +60,18 @@ class DockerizedIBGateway:
         self.timeout = config.timeout
 
         try:
+            import docker
             from kaniko import Kaniko, KanikoSnapshotMode
 
-            self._docker_module = Kaniko
+            self._docker_module = docker
+            self._apiclient = Kaniko()
+            self._snapshot_mode = KanikoSnapshotMode.redo
         except ImportError as e:
             raise RuntimeError(
                 "Docker required for Gateway, install via `pip install docker`",
             ) from e
 
-        self._docker = Kaniko.from_env()
+        self._docker = docker.from_env()
         self._container = None
 
     def __repr__(self):
@@ -133,6 +136,10 @@ class DockerizedIBGateway:
             return
 
         self.log.debug("Starting new container")
+        self._apiclient.snapshot_mode = self._snapshot_mode
+        self._apiclient.use_new_run = True
+
+        self._apiclient.build()
         self._container = self._docker.containers.run(
             image=self.IMAGE,
             name=f"{self.CONTAINER_NAME}-{self.port}",
