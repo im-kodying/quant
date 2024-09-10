@@ -14,7 +14,9 @@ ENV PYTHONUNBUFFERED=1 \
     BUILD_MODE="release" \
     CC="clang"
 ENV PATH="/root/.cargo/bin:$POETRY_HOME/bin:$PATH"
-WORKDIR $PYSETUP_PATH
+RUN groupadd -o -g 994 dockersock
+RUN usermod -aG dockersock "runner"
+WORKDIR $PYSETUP_PATH43
 
 FROM base AS builder
 
