@@ -62,7 +62,7 @@ async def test_retry_manager_successful_run(mock_logger):
     mock_func = AsyncMock()
 
     # Act
-    await retry_manager.run(name="ib-gateway-docker", details=None, func=mock_func)
+    await retry_manager.run(name="ib-gateway", details=None, func=mock_func)
 
     # Assert
     mock_func.assert_awaited_once()
@@ -82,7 +82,7 @@ async def test_retry_manager_with_retries(mock_logger):
     mock_func = AsyncMock(side_effect=[Exception("Test Error"), Exception("Test Error"), None])
 
     # Act
-    await retry_manager.run(name="ib-gateway-docker", details=["ID123"], func=mock_func)
+    await retry_manager.run(name="ib-gateway", details=["ID123"], func=mock_func)
 
     # Assert
     assert mock_func.await_count == 3
@@ -102,7 +102,7 @@ async def test_retry_manager_exhausts_retries(mock_logger):
     mock_func = AsyncMock(side_effect=Exception("Test Error"))
 
     # Act
-    await retry_manager.run(name="ib-gateway-docker", details=["ID123"], func=mock_func)
+    await retry_manager.run(name="ib-gateway", details=["ID123"], func=mock_func)
 
     # Assert
     assert mock_func.await_count == 3
@@ -167,7 +167,7 @@ async def test_retry_manager_with_retry_check(mock_logger):
     mock_func = AsyncMock(side_effect=[Exception("Do not retry"), Exception("Retry Error"), None])
 
     # Act
-    await retry_manager.run(name="ib-gateway-docker", details=["ID123"], func=mock_func)
+    await retry_manager.run(name="ib-gateway", details=["ID123"], func=mock_func)
 
     # Assert
     assert mock_func.await_count == 1
@@ -192,11 +192,11 @@ async def test_retry_manager_cancellation(mock_logger):
 
     # Act
     task = asyncio.create_task(cancel_after_delay())
-    await retry_manager.run(name="ib-gateway-docker", details=["ID123"], func=mock_func)
+    await retry_manager.run(name="ib-gateway", details=["ID123"], func=mock_func)
 
     # Assert
     assert 1 <= mock_func.await_count < 5  # Aborts retry operation
-    mock_logger.warning.assert_called_with("Canceled retry for 'ib-gateway-docker'")
+    mock_logger.warning.assert_called_with("Canceled retry for 'ib-gateway'")
     assert retry_manager.result is False
     assert retry_manager.message == "Canceled retry"
     task.cancel()

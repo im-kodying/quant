@@ -146,7 +146,7 @@ def test_position_filled_with_buy_order():
     last = Price.from_str("1.00050")
     assert position.symbol == AUDUSD_SIM.id.symbol
     assert position.venue == AUDUSD_SIM.id.venue
-    assert position == position  # Equality operator ib-gateway-docker
+    assert position == position  # Equality operator ib-gateway
     assert position.opening_order_id == ClientOrderId("O-20210410-022422-001-001-1")
     assert position.closing_order_id is None
     assert position.quantity == Quantity.from_int(100_000)

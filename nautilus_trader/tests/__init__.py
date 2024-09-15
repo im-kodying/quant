@@ -13,7 +13,7 @@
 #  limitations under the License.
 # -------------------------------------------------------------------------------------------------
 """
-The ib-gateway-docker suite for `NautilusTrader` including unit, integration, acceptance and
+The ib-gateway suite for `NautilusTrader` including unit, integration, acceptance and
 performance tests.
 """
 

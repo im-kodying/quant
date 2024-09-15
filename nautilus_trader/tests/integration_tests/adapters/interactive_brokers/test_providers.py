@@ -178,14 +178,14 @@ async def test_load_instrument_using_contract_id(mocker, instrument_provider):
     assert fx.price_precision == 5
 
 
-@pytest.mark.skip(reason="Scope of ib-gateway-docker not clear!")
+@pytest.mark.skip(reason="Scope of ib-gateway not clear!")
 @pytest.mark.asyncio()
 async def test_none_filters(instrument_provider):
     # Act, Arrange, Assert
     instrument_provider.load_all(None)
 
 
-@pytest.mark.skip(reason="Scope of ib-gateway-docker not clear!")
+@pytest.mark.skip(reason="Scope of ib-gateway not clear!")
 @pytest.mark.asyncio()
 async def test_instrument_filter_callable_none(mocker, instrument_provider):
     # Arrange
@@ -204,7 +204,7 @@ async def test_instrument_filter_callable_none(mocker, instrument_provider):
     assert len(instrument_provider.get_all()) == 1
 
 
-@pytest.mark.skip(reason="Scope of ib-gateway-docker not clear!")
+@pytest.mark.skip(reason="Scope of ib-gateway not clear!")
 @pytest.mark.asyncio()
 async def test_instrument_filter_callable_option_filter(mocker, instrument_provider):
     # Arrange

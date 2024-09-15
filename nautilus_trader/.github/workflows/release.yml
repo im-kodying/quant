@@ -22,7 +22,7 @@ jobs:
     defaults:
       run:
         shell: bash
-    name: ib-gateway-docker-pip-install - Python ${{ matrix.python-version }} (${{ matrix.arch }} ${{ matrix.os }})
+    name: ib-gateway-pip-install - Python ${{ matrix.python-version }} (${{ matrix.arch }} ${{ matrix.os }})
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -91,7 +91,7 @@ jobs:
         run: pip install .
 
   tag-release:
-    needs: [ib-gateway-docker-pip-install]
+    needs: [ib-gateway-pip-install]
     name: tag-release - Python 3.11 (ubuntu-latest)
     runs-on: ubuntu-latest
     outputs:

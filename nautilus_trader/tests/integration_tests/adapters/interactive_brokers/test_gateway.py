@@ -25,7 +25,7 @@ pytestmark = pytest.mark.skip(reason="Skip due currently flaky mocks")
 def test_gateway_start_no_container(mocker):
     # Arrange
     mock_docker = mocker.patch.object(ContainerCollection, "run")
-    gateway = DockerizedIBGateway(username="ib-gateway-docker", password="ib-gateway-docker")
+    gateway = DockerizedIBGateway(username="ib-gateway", password="ib-gateway")
 
     # Act
     gateway.start(wait=None)
@@ -38,8 +38,8 @@ def test_gateway_start_no_container(mocker):
         "ports": {"4001": "4001", "4002": "4002", "5900": "5900"},
         "platform": "amd64",
         "environment": {
-            "TWS_USERID": "ib-gateway-docker",
-            "TWS_PASSWORD": "ib-gateway-docker",
+            "TWS_USERID": "ib-gateway",
+            "TWS_PASSWORD": "ib-gateway",
             "TRADING_MODE": "paper",
             "READ_ONLY_API": "yes",
         },

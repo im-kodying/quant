@@ -170,7 +170,7 @@ class TestBacktestAcceptanceTestsUSDJPY:
 
         # Note since these strategies are operating on the same instrument_id as per
         # the EMACross BUY/SELL logic they will be closing each others positions.
-        # The purpose of the ib-gateway-docker is just to ensure multiple strategies can run together.
+        # The purpose of the ib-gateway is just to ensure multiple strategies can run together.
         self.engine.add_strategies(strategies=[strategy1, strategy2])
 
         # Act

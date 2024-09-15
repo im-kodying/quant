@@ -13,6 +13,6 @@
 #  limitations under the License.
 # -------------------------------------------------------------------------------------------------
 """
-The ib-gateway-docker kit contains ib-gateway-docker doubles and helpers to support the NautilusTrader ib-gateway-docker suite,
+The ib-gateway kit contains ib-gateway doubles and helpers to support the NautilusTrader ib-gateway suite,
 as well as supporting testing for downstream projects and packages.
 """

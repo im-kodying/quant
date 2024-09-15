@@ -541,7 +541,7 @@ cdef class TestClock(Clock):
 
     """
 
-    __test__ = False  # Required so pytest does not consider this a ib-gateway-docker class
+    __test__ = False  # Required so pytest does not consider this a ib-gateway class
 
     def __init__(self):
         self._mem = test_clock_new()
@@ -2574,7 +2574,7 @@ cdef inline bint is_matching(str topic, str pattern):
     return t[n, m]
 
 
-# Python wrapper for ib-gateway-docker access
+# Python wrapper for ib-gateway access
 def is_matching_py(str topic, str pattern) -> bool:
     return is_matching(topic, pattern)
 

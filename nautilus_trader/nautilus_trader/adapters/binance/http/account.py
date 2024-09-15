@@ -38,7 +38,7 @@ class BinanceOrderHttp(BinanceHttpEndpoint):
     Endpoint for managing orders.
 
     `GET /api/v3/order`
-    `GET /api/v3/order/ib-gateway-docker`
+    `GET /api/v3/order/ib-gateway`
     `GET /fapi/v1/order`
     `GET /dapi/v1/order`
 
@@ -82,7 +82,7 @@ class BinanceOrderHttp(BinanceHttpEndpoint):
         url_path = base_endpoint + "order"
 
         if testing_endpoint:
-            url_path = url_path + "/ib-gateway-docker"
+            url_path = url_path + "/ib-gateway"
 
         super().__init__(
             client,
