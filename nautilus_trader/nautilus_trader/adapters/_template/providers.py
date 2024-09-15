@@ -17,7 +17,7 @@ from nautilus_trader.common.providers import InstrumentProvider
 from nautilus_trader.model.identifiers import InstrumentId
 
 
-# The 'pragma: no cover' comment excludes a method from ib-gateway coverage.
+# The 'pragma: no cover' comment excludes a method from ibkr coverage.
 # https://coverage.readthedocs.io/en/coverage-4.3.3/excluding.html
 # The reason for their use is to reduce redundant/needless tests which simply
 # assert that a `NotImplementedError` is raised when calling abstract methods.

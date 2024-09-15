@@ -25,21 +25,21 @@ pytestmark = pytest.mark.skip(reason="Skip due currently flaky mocks")
 def test_gateway_start_no_container(mocker):
     # Arrange
     mock_docker = mocker.patch.object(ContainerCollection, "run")
-    gateway = DockerizedIBGateway(username="ib-gateway", password="ib-gateway")
+    gateway = DockerizedIBGateway(username="ibkr", password="ibkr")
 
     # Act
     gateway.start(wait=None)
 
     # Assert
     expected = {
-        "image": "ghcr.io/unusualalpha/ib-gateway",
-        "name": "nautilus-ib-gateway",
+        "image": "ghcr.io/unusualalpha/ibkr",
+        "name": "nautilus-ibkr",
         "detach": True,
         "ports": {"4001": "4001", "4002": "4002", "5900": "5900"},
         "platform": "amd64",
         "environment": {
-            "TWS_USERID": "ib-gateway",
-            "TWS_PASSWORD": "ib-gateway",
+            "TWS_USERID": "ibkr",
+            "TWS_PASSWORD": "ibkr",
             "TRADING_MODE": "paper",
             "READ_ONLY_API": "yes",
         },

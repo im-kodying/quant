@@ -2049,7 +2049,7 @@ class TestExecutionEngine:
         self.exec_engine.process(order_updated)
 
         # Order should have new venue_order_id
-        # TODO: This ib-gateway was updated as the venue order ID currently does not change once assigned
+        # TODO: This ibkr was updated as the venue order ID currently does not change once assigned
         cached_order = self.cache.order(order.client_order_id)
         assert cached_order.venue_order_id == new_venue_id
 

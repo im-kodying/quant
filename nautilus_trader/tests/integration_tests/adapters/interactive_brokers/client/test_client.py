@@ -195,7 +195,7 @@ async def test_run_tws_incoming_msg_reader(ib_client):
     # Arrange
     ib_client._eclient.conn = Mock()
 
-    test_messages = [b"ib-gateway message 1", b"ib-gateway message 2"]
+    test_messages = [b"ibkr message 1", b"ibkr message 2"]
     ib_client._eclient.conn.recvMsg = MagicMock(side_effect=test_messages)
 
     with patch("ibapi.comm.read_msg", side_effect=[(None, msg, b"") for msg in test_messages]):
@@ -211,7 +211,7 @@ async def test_run_tws_incoming_msg_reader(ib_client):
 @pytest.mark.asyncio
 async def test_run_internal_msg_queue(ib_client_running):
     # Arrange
-    test_messages = [b"ib-gateway message 1", b"ib-gateway message 2"]
+    test_messages = [b"ibkr message 1", b"ibkr message 2"]
     for msg in test_messages:
         ib_client_running._internal_msg_queue.put_nowait(msg)
     ib_client_running._process_message = AsyncMock()

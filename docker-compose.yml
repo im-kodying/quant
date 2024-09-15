@@ -3,10 +3,10 @@ services:
   ib-gateway:
     restart: always
     build:
-      context: ib-gateway/latest
+      context: ibkr/latest
       tags:
-        - "ghcr.io/gnzsnz/ib-gateway:latest"
-    image: ghcr.io/gnzsnz/ib-gateway:latest
+        - "ghcr.io/gnzsnz/ibkr:latest"
+    image: ghcr.io/gnzsnz/ibkr:latest
     environment:
       TWS_USERID: ${TWS_USERID}
       TWS_PASSWORD: ${TWS_PASSWORD}

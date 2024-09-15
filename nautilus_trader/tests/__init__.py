@@ -13,7 +13,7 @@
 #  limitations under the License.
 # -------------------------------------------------------------------------------------------------
 """
-The ib-gateway suite for `NautilusTrader` including unit, integration, acceptance and
+The ibkr suite for `NautilusTrader` including unit, integration, acceptance and
 performance tests.
 """
 

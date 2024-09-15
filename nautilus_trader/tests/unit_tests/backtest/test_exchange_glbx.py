@@ -308,10 +308,10 @@ class TestSimulatedExchangeGlbx:
         )
         self.strategy.submit_order(order)
         self.exchange.process(_ESH4_GLBX.expiration_ns)
-        self.strategy.close_all_positions(instrument_id=_ESH4_GLBX.id)  # <- Close position for ib-gateway
+        self.strategy.close_all_positions(instrument_id=_ESH4_GLBX.id)  # <- Close position for ibkr
         self.exchange.process(_ESH4_GLBX.expiration_ns)
 
-        # Assert ib-gateway prerequisite
+        # Assert ibkr prerequisite
         assert self.cache.positions_open_count() == 0
         assert self.cache.positions_total_count() == 1
 

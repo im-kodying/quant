@@ -50,7 +50,7 @@ def run():
     engine = BacktestEngine(config=config)
 
     # Optional plug in module to simulate rollover interest,
-    # the data is coming from packaged ib-gateway data.
+    # the data is coming from packaged ibkr data.
     provider = TestDataProvider()
     interest_rate_data = provider.read_csv("short-term-interest.csv")
     config = FXRolloverInterestConfig(interest_rate_data)

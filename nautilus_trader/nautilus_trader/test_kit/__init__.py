@@ -13,6 +13,6 @@
 #  limitations under the License.
 # -------------------------------------------------------------------------------------------------
 """
-The ib-gateway kit contains ib-gateway doubles and helpers to support the NautilusTrader ib-gateway suite,
+The ibkr kit contains ibkr doubles and helpers to support the NautilusTrader ibkr suite,
 as well as supporting testing for downstream projects and packages.
 """

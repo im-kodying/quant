@@ -802,7 +802,7 @@ class TestBetfairParsing:
 def request_id() -> int:
     """
     `betfair_parser uses an auto=incrementing request_id which can cause issues with the
-    ib-gateway suite depending on how it is run.
+    ibkr suite depending on how it is run.
 
     Return the current request value for testing purposes
 

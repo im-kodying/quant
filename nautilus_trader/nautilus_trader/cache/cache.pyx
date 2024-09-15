@@ -1436,7 +1436,7 @@ cdef class Cache(CacheFacade):
             raise ValueError(
                 f"Existing {existing_venue_order_id!r} for {client_order_id!r} "
                 f"did not match the given {venue_order_id!r}. "
-                "If you are writing a ib-gateway then try a different `venue_order_id`, "
+                "If you are writing a ibkr then try a different `venue_order_id`, "
                 "otherwise this is probably a bug."
             )
 

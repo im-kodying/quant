@@ -200,7 +200,7 @@ class TestLiveExecutionEngine:
     @pytest.mark.asyncio()
     async def test_message_qsize_at_max_blocks_on_put_command(self):
         # Arrange
-        # Deregister ib-gateway fixture ExecutionEngine from msgbus)
+        # Deregister ibkr fixture ExecutionEngine from msgbus)
         self.msgbus.deregister(
             endpoint="ExecEngine.execute",
             handler=self.exec_engine.execute,
@@ -264,7 +264,7 @@ class TestLiveExecutionEngine:
     @pytest.mark.asyncio()
     async def test_message_qsize_at_max_blocks_on_put_event(self):
         # Arrange
-        # Deregister ib-gateway fixture ExecutionEngine from msgbus)
+        # Deregister ibkr fixture ExecutionEngine from msgbus)
         self.msgbus.deregister(
             endpoint="ExecEngine.execute",
             handler=self.exec_engine.execute,
@@ -502,7 +502,7 @@ class TestLiveExecutionEngine:
     @pytest.mark.asyncio
     async def test_check_inflight_order_status(self):
         # Arrange
-        # Deregister ib-gateway fixture ExecutionEngine from msgbus)
+        # Deregister ibkr fixture ExecutionEngine from msgbus)
         order = self.strategy.order_factory.limit(
             instrument_id=AUDUSD_SIM.id,
             order_side=OrderSide.BUY,
