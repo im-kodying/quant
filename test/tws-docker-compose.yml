@@ -1,13 +1,22 @@
 name: algo-trader
 services:
-  ib-gateway:
-    restart: always
+  tws:
+    restart: unless-stopped
+    devices:
+      - /dev/dri:/dev/dri #recomended
+    shm_size: "1gb" #recomended
+    security_opt:
+      - seccomp:unconfined #recomended
     build:
-      context: test/latest
+      context: ./latest
+      dockerfile: Dockerfile.tws
       tags:
-        - "ghcr.io/gnzsnz/ib-gateway:latest"
-    image: ghcr.io/gnzsnz/ib-gateway:latest
+        - "ghcr.io/gnzsnz/tws-rdesktop:latest"
+    image: ghcr.io/gnzsnz/tws-rdesktop:latest
     environment:
+      PUID: 1000
+      PGID: 1000
+      PASSWD: ${PASSWD:-}
       TWS_USERID: ${TWS_USERID}
       TWS_PASSWORD: ${TWS_PASSWORD}
       TRADING_MODE: ${TRADING_MODE:-paper}
@@ -16,7 +25,6 @@ services:
       TWS_SETTINGS_PATH: ${TWS_SETTINGS_PATH:-}
       TWS_ACCEPT_INCOMING: ${TWS_ACCEPT_INCOMING:-manual}
       READ_ONLY_API: ${READ_ONLY_API:-}
-      VNC_SERVER_PASSWORD: ${VNC_SERVER_PASSWORD:-}
       TWOFA_TIMEOUT_ACTION: ${TWOFA_TIMEOUT_ACTION:-exit}
       BYPASS_WARNING: ${BYPASS_WARNING:-}
       AUTO_RESTART_TIME: ${AUTO_RESTART_TIME:-}
@@ -40,13 +48,18 @@ services:
       SSH_REMOTE_PORT: ${SSH_REMOTE_PORT:-}
       SSH_USER_TUNNEL: ${SSH_USER_TUNNEL:-}
       SSH_RESTART: ${SSH_RESTART:-}
-      SSH_VNC_PORT: ${SSH_VNC_PORT:-}
-    #    volumes:
-    #      - ${PWD}/jts.ini:/home/ibgateway/Jts/jts.ini
-    #      - ${PWD}/config.ini:/home/ibgateway/ibc/config.ini
-    #      - ${PWD}/tws_settings/:${TWS_SETTINGS_PATH:-/home/ibgateway/Jts}
-    #      - ${PWD}/ssh/:/home/ibgateway/.ssh
+      SSH_RDP_PORT: ${SSH_RDP_PORT:-}
+    volumes:
+      - ./config:/config # optional
+      - tws_tmp:/tmp # recommended for performance
+    # custom certificate and key
+    #- ${PWD}/keylock:/keylock # required to avoid key generation by container
+    #- ${PWD/key.pem:/etc/xrdp/key.pem # key
+    #- ${PWD}/cert.pem:/etc/xrdp/cert.pem # cert
     ports:
-      - "127.0.0.1:4001:4003"
-      - "127.0.0.1:4002:4004"
-      - "127.0.0.1:5900:5900"
+      - "127.0.0.1:7496:7498" # live
+      - "127.0.0.1:7497:7499" # paper
+      - "127.0.0.1:3370:3389" # xrdp
+
+volumes:
+  tws_tmp:
