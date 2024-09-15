@@ -30,11 +30,11 @@ RUN apt-get update -y && \
   chmod -R u+x /root/ibc/*.sh && \
   chmod -R u+x /root/ibc/scripts/*.sh
 
-COPY ./config/ibgateway/jts.ini.tmpl /root/Jts/jts.ini.tmpl
-COPY ./config/ibc/config.ini.tmpl /root/ibc/config.ini.tmpl
+COPY ./docker-ibkr/latest/config/ibgateway/jts.ini.tmpl /root/Jts/jts.ini.tmpl
+COPY ./docker-ibkr/latest/config/ibc/config.ini.tmpl /root/ibc/config.ini.tmpl
 
 # Copy scripts
-COPY ./scripts /root/scripts
+COPY ./docker-ibkr/latest/scripts /root/scripts
 
 ##############################################################################
 # Build Stage: build production image
