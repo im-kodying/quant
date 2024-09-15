@@ -53,7 +53,7 @@ def run(*args, **kwargs):
     engine = BacktestEngine(config=config)
 
     # Optional plug in module to simulate rollover interest,
-    # the data is coming from packaged ibkr data.
+    # the data is coming from packaged docker-ibkr data.
     provider = TestDataProvider()
     interest_rate_data = provider.read_csv("short-term-interest.csv")
     config = FXRolloverInterestConfig(interest_rate_data)

@@ -1278,7 +1278,7 @@ class TestTimeBarAggregator:
             bar_type,
             handler.append,
             clock,
-            build_with_no_updates=False,  # <-- set this True and ibkr will fail
+            build_with_no_updates=False,  # <-- set this True and docker-ibkr will fail
         )
         aggregator.handle_quote_tick(ticks[0])
 
@@ -1309,7 +1309,7 @@ class TestTimeBarAggregator:
             bar_type,
             handler.append,
             clock,
-            timestamp_on_close=False,  # <-- set this True and ibkr will fail
+            timestamp_on_close=False,  # <-- set this True and docker-ibkr will fail
         )
         aggregator.handle_quote_tick(ticks[0])
 

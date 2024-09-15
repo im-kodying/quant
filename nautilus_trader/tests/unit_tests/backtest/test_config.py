@@ -197,7 +197,7 @@ class TestBacktestConfigParsing:
         self.instrument = TestInstrumentProvider.default_fx_ccy("AUD/USD", venue=self.venue)
         self.backtest_config = TestConfigStubs.backtest_run_config(catalog=self.catalog)
 
-    @pytest.mark.skipif(sys.platform == "win32", reason="redundant to also ibkr Windows")
+    @pytest.mark.skipif(sys.platform == "win32", reason="redundant to also docker-ibkr Windows")
     def test_run_config_to_json(self) -> None:
         run_config = TestConfigStubs.backtest_run_config(
             catalog=self.catalog,
@@ -215,7 +215,7 @@ class TestBacktestConfigParsing:
         result = len(msgspec.json.encode(json))
         assert result == 1062  # UNIX
 
-    @pytest.mark.skipif(sys.platform == "win32", reason="redundant to also ibkr Windows")
+    @pytest.mark.skipif(sys.platform == "win32", reason="redundant to also docker-ibkr Windows")
     def test_run_config_parse_obj(self) -> None:
         run_config = TestConfigStubs.backtest_run_config(
             catalog=self.catalog,
@@ -236,7 +236,7 @@ class TestBacktestConfigParsing:
         assert isinstance(node, BacktestNode)
         assert len(raw) == 794  # UNIX
 
-    @pytest.mark.skipif(sys.platform == "win32", reason="redundant to also ibkr Windows")
+    @pytest.mark.skipif(sys.platform == "win32", reason="redundant to also docker-ibkr Windows")
     def test_backtest_data_config_to_dict(self) -> None:
         run_config = TestConfigStubs.backtest_run_config(
             catalog=self.catalog,
@@ -257,7 +257,7 @@ class TestBacktestConfigParsing:
         result = len(msgspec.json.encode(json))
         assert result == 1862
 
-    @pytest.mark.skipif(sys.platform == "win32", reason="redundant to also ibkr Windows")
+    @pytest.mark.skipif(sys.platform == "win32", reason="redundant to also docker-ibkr Windows")
     def test_backtest_run_config_id(self) -> None:
         token = self.backtest_config.id
         print("token:", token)
@@ -265,7 +265,7 @@ class TestBacktestConfigParsing:
         print("token_value:", value.decode())
         assert token == "f06b36d5e3a4d1fb308c244ebb1fc70588ed7e746c6fe43f0ee51e6490a7415b"
 
-    @pytest.mark.skipif(sys.platform == "win32", reason="redundant to also ibkr Windows")
+    @pytest.mark.skipif(sys.platform == "win32", reason="redundant to also docker-ibkr Windows")
     @pytest.mark.parametrize(
         ("config_func", "keys", "kw", "expected"),
         [

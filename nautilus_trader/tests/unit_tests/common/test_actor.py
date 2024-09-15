@@ -1815,7 +1815,7 @@ class TestActor:
 
         # Act, Assert
         with pytest.raises(KeyError):
-            actor.publish_signal(name="ibkr", value={"a": 1}, ts_event=0)
+            actor.publish_signal(name="docker-ibkr", value={"a": 1}, ts_event=0)
 
     def test_publish_signal_sends_to_subscriber(self) -> None:
         # Arrange
@@ -1835,13 +1835,13 @@ class TestActor:
 
         # Act
         value = 5.0
-        actor.publish_signal(name="ibkr", value=value, ts_event=0)
+        actor.publish_signal(name="docker-ibkr", value=value, ts_event=0)
 
         # Assert
         msg = handler[0]
         assert isinstance(msg, Data)
         assert msg.is_signal()
-        assert msg.is_signal("ibkr")
+        assert msg.is_signal("docker-ibkr")
         assert msg.ts_event == 0
         assert msg.ts_init == 0
         assert msg.value == value
@@ -1857,7 +1857,7 @@ class TestActor:
         )
 
         # Act
-        actor.subscribe_signal("ibkr")
+        actor.subscribe_signal("docker-ibkr")
 
         # Assert
         assert self.data_engine.command_count == 0

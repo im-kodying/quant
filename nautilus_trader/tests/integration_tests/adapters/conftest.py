@@ -243,7 +243,7 @@ def trade_id(strategy):
 
 @pytest.fixture(autouse=True)
 def components(data_engine, exec_engine, risk_engine, strategy):
-    # Ensures components are created and running for every ibkr
+    # Ensures components are created and running for every docker-ibkr
     return
 
 

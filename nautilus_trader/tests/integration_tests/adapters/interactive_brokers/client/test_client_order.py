@@ -31,7 +31,7 @@ def test_place_order(ib_client):
     """
     Test case for placing an order with the Interactive Brokers client.
 
-    This ibkr verifies that the placeOrder method is called with the correct parameters.
+    This docker-ibkr verifies that the placeOrder method is called with the correct parameters.
 
     """
     # Arrange: Set up the order and mock the placeOrder method

@@ -74,8 +74,8 @@ def instrument():
 @pytest.fixture()
 def gateway_config():
     return DockerizedIBGatewayConfig(
-        username="ibkr",
-        password="ibkr",
+        username="docker-ibkr",
+        password="docker-ibkr",
     )
 
 

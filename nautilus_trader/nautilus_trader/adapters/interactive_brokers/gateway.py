@@ -38,8 +38,8 @@ class DockerizedIBGateway:
     A class to manage starting an Interactive Brokers Gateway docker container.
     """
 
-    IMAGE: ClassVar[str] = "ghcr.io/gnzsnz/ibkr:stable"
-    CONTAINER_NAME: ClassVar[str] = "nautilus-ibkr"
+    IMAGE: ClassVar[str] = "ghcr.io/gnzsnz/docker-ibkr:stable"
+    CONTAINER_NAME: ClassVar[str] = "nautilus-docker-ibkr"
     PORTS: ClassVar[dict[str, int]] = {"paper": 4002, "live": 4001}
 
     def __init__(self, config: DockerizedIBGatewayConfig):

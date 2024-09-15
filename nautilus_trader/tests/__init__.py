@@ -13,7 +13,7 @@
 #  limitations under the License.
 # -------------------------------------------------------------------------------------------------
 """
-The ibkr suite for `NautilusTrader` including unit, integration, acceptance and
+The docker-ibkr suite for `NautilusTrader` including unit, integration, acceptance and
 performance tests.
 """
 

@@ -112,7 +112,7 @@ cdef extern from "../includes/common.h":
     cdef struct LogGuard:
         pass
 
-    # A static ibkr clock.
+    # A static docker-ibkr clock.
     #
     # Stores the current timestamp internally which can be advanced.
     cdef struct TestClock:

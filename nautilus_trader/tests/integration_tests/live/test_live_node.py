@@ -145,7 +145,7 @@ class TestTradingNodeConfiguration:
         node.add_exec_client_factory("BINANCE", BinanceLiveExecClientFactory)
         node.build()
 
-    @pytest.mark.skip(reason="refactor ibkr to use Binance clients which have no dependencies")
+    @pytest.mark.skip(reason="refactor docker-ibkr to use Binance clients which have no dependencies")
     def test_node_build_objects(self, monkeypatch):
         # Arrange
         loop = asyncio.new_event_loop()

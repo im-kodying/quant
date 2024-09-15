@@ -22,7 +22,7 @@ jobs:
     defaults:
       run:
         shell: bash
-    name: ibkr-pip-install - Python ${{ matrix.python-version }} (${{ matrix.arch }} ${{ matrix.os }})
+    name: docker-ibkr-pip-install - Python ${{ matrix.python-version }} (${{ matrix.arch }} ${{ matrix.os }})
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -91,7 +91,7 @@ jobs:
         run: pip install .
 
   tag-release:
-    needs: [ibkr-pip-install]
+    needs: [docker-ibkr-pip-install]
     name: tag-release - Python 3.11 (ubuntu-latest)
     runs-on: ubuntu-latest
     outputs:

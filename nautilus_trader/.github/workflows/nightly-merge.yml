@@ -2,7 +2,7 @@ name: nightly-merge
 
 on:
   push:
-    branches: [nightly-merge-ibkr]
+    branches: [nightly-merge-docker-ibkr]
   # schedule:
   #   - cron: '0 14 * * *'  # At 14:00 UTC every day
 

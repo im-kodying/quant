@@ -13,6 +13,6 @@
 #  limitations under the License.
 # -------------------------------------------------------------------------------------------------
 """
-The ibkr kit contains ibkr doubles and helpers to support the NautilusTrader ibkr suite,
+The docker-ibkr kit contains docker-ibkr doubles and helpers to support the NautilusTrader docker-ibkr suite,
 as well as supporting testing for downstream projects and packages.
 """

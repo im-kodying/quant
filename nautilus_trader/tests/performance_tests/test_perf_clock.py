@@ -64,7 +64,7 @@ def test_advance_time(benchmark: Any) -> None:
 
 def test_iteratively_advance_time(benchmark: Any) -> None:
     store: list[TimeEvent] = []
-    _TEST_CLOCK.set_timer("ibkr", timedelta(seconds=1), callback=store.append)
+    _TEST_CLOCK.set_timer("docker-ibkr", timedelta(seconds=1), callback=store.append)
 
     def _iteratively_advance_time():
         test_time = 0

@@ -1215,7 +1215,7 @@ class TestSimulatedExchangeMarginAccount:
         # Quantity is refreshed -> Ensure we don't trade the entire amount
         tick = TestDataStubs.quote_tick(
             instrument=_USDJPY_SIM,
-            bid_price=90.010,  # <-- in cross for purpose of ibkr
+            bid_price=90.010,  # <-- in cross for purpose of docker-ibkr
             ask_price=90.000,
             bid_size=10_000,
             ask_size=10_000,

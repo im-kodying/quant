@@ -74,7 +74,7 @@ async def _setup_order_state(
     include_fills: bool = False,
 ):
     """
-    Ready the engine to ibkr a message from betfair, setting orders into the correct
+    Ready the engine to docker-ibkr a message from betfair, setting orders into the correct
     state.
     """
     if isinstance(order_change_message, bytes):

@@ -52,7 +52,7 @@ CATALOG_PATH = TESTS_PACKAGE_ROOT / "unit_tests" / "persistence" / "catalog"
 
 def _reset(catalog: ParquetDataCatalog) -> None:
     """
-    Cleanup resources before each ibkr run.
+    Cleanup resources before each docker-ibkr run.
     """
     assert catalog.path.endswith("tests/unit_tests/persistence/catalog")
     if catalog.fs.exists(catalog.path):

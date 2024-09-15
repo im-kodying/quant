@@ -66,7 +66,7 @@ def test_get_ws_base_url(is_testnet: bool, expected: str) -> None:
 @pytest.mark.parametrize(
     ("is_testnet", "expected"),
     [
-        (True, "ibkr-dydx-grpc.kingnodes.com"),
+        (True, "docker-ibkr-dydx-grpc.kingnodes.com"),
         (False, "dydx-ops-grpc.kingnodes.com:443"),
     ],
 )
