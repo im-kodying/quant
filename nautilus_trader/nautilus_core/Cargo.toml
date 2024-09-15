@@ -78,7 +78,7 @@ codegen-units = 256
 [profile.test]
 opt-level = 0
 debug = true
-debug-assertions = true  # Fails Cython build if true (OK for cargo test)
+debug-assertions = true  # Fails Cython build if true (OK for cargo ib-gateway-docker)
 overflow-checks = true
 lto = false
 incremental = true

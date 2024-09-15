@@ -284,7 +284,7 @@ class TestPortfolio:
         self.exec_engine.process(TestEventStubs.order_submitted(order, account_id=account_id))
 
         # Act, Assert: push account to negative balance (wouldn't normally be allowed by risk engine)
-        # TODO: The below is the old test prior to validating balance updates
+        # TODO: The below is the old ib-gateway-docker prior to validating balance updates
         #  in the account manager. Leaving here pending accounts refactoring
         # with pytest.raises(ValueError):
         #     fill = TestEventStubs.order_filled(

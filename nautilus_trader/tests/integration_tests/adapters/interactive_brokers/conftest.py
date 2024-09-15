@@ -74,8 +74,8 @@ def instrument():
 @pytest.fixture()
 def gateway_config():
     return DockerizedIBGatewayConfig(
-        username="test",
-        password="test",
+        username="ib-gateway-docker",
+        password="ib-gateway-docker",
     )
 
 

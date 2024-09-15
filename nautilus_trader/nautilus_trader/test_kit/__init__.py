@@ -13,6 +13,6 @@
 #  limitations under the License.
 # -------------------------------------------------------------------------------------------------
 """
-The test kit contains test doubles and helpers to support the NautilusTrader test suite,
+The ib-gateway-docker kit contains ib-gateway-docker doubles and helpers to support the NautilusTrader ib-gateway-docker suite,
 as well as supporting testing for downstream projects and packages.
 """

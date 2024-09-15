@@ -46,8 +46,8 @@ from nautilus_trader.adapters.interactive_brokers.config import DockerizedIBGate
 from nautilus_trader.adapters.interactive_brokers.gateway import DockerizedIBGateway
 
 gateway_config = DockerizedIBGatewayConfig(
-    username="test",
-    password="test",
+    username="ib-gateway-docker",
+    password="ib-gateway-docker",
     trading_mode="paper",
 )
 

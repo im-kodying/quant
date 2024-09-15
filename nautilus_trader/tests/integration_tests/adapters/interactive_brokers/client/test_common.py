@@ -108,11 +108,11 @@ def test_add_subscription(subscriptions, mock_handle, mock_cancel):
     # Arrange
 
     # Act
-    subscription = subscriptions.add(1, "test", mock_handle, mock_cancel)
+    subscription = subscriptions.add(1, "ib-gateway-docker", mock_handle, mock_cancel)
 
     # Assert
     assert subscription.req_id == 1
-    assert subscription.name == "test"
+    assert subscription.name == "ib-gateway-docker"
     assert subscription.handle == mock_handle
     assert subscription.cancel == mock_cancel
     assert subscription.last is None
@@ -120,7 +120,7 @@ def test_add_subscription(subscriptions, mock_handle, mock_cancel):
 
 def test_remove_subscription_by_req_id(subscriptions, mock_handle, mock_cancel):
     # Arrange
-    subscriptions.add(1, "test", mock_handle, mock_cancel)
+    subscriptions.add(1, "ib-gateway-docker", mock_handle, mock_cancel)
 
     # Act
     subscriptions.remove(req_id=1)
@@ -131,18 +131,18 @@ def test_remove_subscription_by_req_id(subscriptions, mock_handle, mock_cancel):
 
 def test_remove_subscription_by_name(subscriptions, mock_handle, mock_cancel):
     # Arrange
-    subscriptions.add(1, "test", mock_handle, mock_cancel)
+    subscriptions.add(1, "ib-gateway-docker", mock_handle, mock_cancel)
 
     # Act
-    subscriptions.remove(name="test")
+    subscriptions.remove(name="ib-gateway-docker")
 
     # Assert
-    assert subscriptions.get(name="test") is None
+    assert subscriptions.get(name="ib-gateway-docker") is None
 
 
 def test_update_last(subscriptions, mock_handle, mock_cancel):
     # Arrange
-    subscriptions.add(1, "test", mock_handle, mock_cancel)
+    subscriptions.add(1, "ib-gateway-docker", mock_handle, mock_cancel)
 
     # Act
     subscriptions.update_last(1, "updated")
@@ -155,12 +155,12 @@ def test_add_request(requests, mock_handle, mock_cancel):
     # Arrange
 
     # Act
-    requests.add(1, "test", mock_handle, mock_cancel)
+    requests.add(1, "ib-gateway-docker", mock_handle, mock_cancel)
     request = requests.get(req_id=1)
 
     # Assert
     assert request.req_id == 1
-    assert request.name == "test"
+    assert request.name == "ib-gateway-docker"
     assert request.handle == mock_handle
     assert request.cancel == mock_cancel
     assert isinstance(request.future, asyncio.Future)
@@ -169,7 +169,7 @@ def test_add_request(requests, mock_handle, mock_cancel):
 
 def test_remove_request_by_req_id(requests, mock_handle, mock_cancel):
     # Arrange
-    requests.add(1, "test", mock_handle, mock_cancel)
+    requests.add(1, "ib-gateway-docker", mock_handle, mock_cancel)
 
     # Act
     requests.remove(req_id=1)
@@ -180,10 +180,10 @@ def test_remove_request_by_req_id(requests, mock_handle, mock_cancel):
 
 def test_remove_request_by_name(requests, mock_handle, mock_cancel):
     # Arrange
-    requests.add(1, "test", mock_handle, mock_cancel)
+    requests.add(1, "ib-gateway-docker", mock_handle, mock_cancel)
 
     # Act
-    requests.remove(name="test")
+    requests.remove(name="ib-gateway-docker")
 
     # Assert
-    assert requests.get(name="test") is None
+    assert requests.get(name="ib-gateway-docker") is None

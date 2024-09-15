@@ -720,7 +720,7 @@ def get_contract_month_code(expiry_month: int) -> str:  # noqa: C901 (too comple
 
 class TestDataProvider:
     """
-    Provides an API to load data from either the 'test/' directory or the projects
+    Provides an API to load data from either the 'ib-gateway-docker/' directory or the projects
     GitHub repo.
 
     Parameters
@@ -738,7 +738,7 @@ class TestDataProvider:
 
     @staticmethod
     def _test_data_directory() -> str | None:
-        # Determine if the test data directory exists (i.e. this is a checkout of the source code).
+        # Determine if the ib-gateway-docker data directory exists (i.e. this is a checkout of the source code).
         source_root = pathlib.Path(__file__).parent.parent
         assert source_root.stem == "nautilus_trader"
         test_data_dir = source_root.parent.joinpath("tests", "test_data")
@@ -753,7 +753,7 @@ class TestDataProvider:
             self.root = test_data_dir
             self.fs = fsspec.filesystem("file")
         else:
-            print("Couldn't find test data directory, test data will be pulled from GitHub")
+            print("Couldn't find ib-gateway-docker data directory, ib-gateway-docker data will be pulled from GitHub")
             self.root = "tests/test_data"
             self.fs = fsspec.filesystem("github", org="nautechsystems", repo="nautilus_trader")
 

@@ -30,7 +30,7 @@ def bypass_logging() -> None:
     """
     Fixture to bypass logging for all tests.
 
-    `autouse=True` will mean this function is run prior to every test. To disable this
+    `autouse=True` will mean this function is run prior to every ib-gateway-docker. To disable this
     to debug specific tests, simply comment this out.
 
     """

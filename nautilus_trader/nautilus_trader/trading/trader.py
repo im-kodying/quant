@@ -16,7 +16,7 @@
 The `Trader` class is intended to manage a fleet of trading strategies within a running
 instance of the platform.
 
-A running instance could be either a test/backtest or live implementation - the
+A running instance could be either a ib-gateway-docker/backtest or live implementation - the
 `Trader` will operate in the same way.
 
 """

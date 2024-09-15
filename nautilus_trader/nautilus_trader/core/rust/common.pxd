@@ -112,7 +112,7 @@ cdef extern from "../includes/common.h":
     cdef struct LogGuard:
         pass
 
-    # A static test clock.
+    # A static ib-gateway-docker clock.
     #
     # Stores the current timestamp internally which can be advanced.
     cdef struct TestClock:

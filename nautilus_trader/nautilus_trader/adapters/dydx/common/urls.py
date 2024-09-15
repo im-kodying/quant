@@ -42,6 +42,6 @@ def get_grpc_base_url(is_testnet: bool) -> str:
     Provide the base GRPC url for dYdX.
     """
     if is_testnet:
-        return "test-dydx-grpc.kingnodes.com"
+        return "ib-gateway-docker-dydx-grpc.kingnodes.com"
 
     return "dydx-ops-grpc.kingnodes.com:443"

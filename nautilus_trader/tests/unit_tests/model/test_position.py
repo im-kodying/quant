@@ -383,7 +383,7 @@ class TestPosition:
         assert position.symbol == AUDUSD_SIM.id.symbol
         assert position.venue == AUDUSD_SIM.id.venue
         assert not position.is_opposite_side(fill.order_side)
-        assert position == position  # Equality operator test
+        assert position == position  # Equality operator ib-gateway-docker
         assert position.opening_order_id == ClientOrderId("O-19700101-000000-000-001-1")
         assert position.closing_order_id is None
         assert position.quantity == Quantity.from_int(100_000)
