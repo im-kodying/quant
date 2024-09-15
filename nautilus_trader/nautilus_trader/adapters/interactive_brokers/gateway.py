@@ -61,11 +61,8 @@ class DockerizedIBGateway:
 
         try:
             import docker
-            from kaniko import Kaniko, KanikoSnapshotMode
 
             self._docker_module = docker
-            self._apiclient = Kaniko()
-            self._snapshot_mode = KanikoSnapshotMode.redo
         except ImportError as e:
             raise RuntimeError(
                 "Docker required for Gateway, install via `pip install docker`",

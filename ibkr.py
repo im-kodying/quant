@@ -1,5 +1,8 @@
 from nautilus_trader.adapters.interactive_brokers.config import DockerizedIBGatewayConfig
 from nautilus_trader.adapters.interactive_brokers.gateway import DockerizedIBGateway
+import logging
+logger = logging.getLogger()
+logger.setLevel("INFO")
 
 if __name__ == "main":
     gateway_config = DockerizedIBGatewayConfig(
@@ -15,7 +18,7 @@ if __name__ == "main":
     gateway.start()
 
     # Confirm you are logged in
-    print(gateway.is_logged_in(gateway.container))
+    logger.info(gateway.is_logged_in(gateway.container))
 
     # Inspect the logs
-    print(gateway.container.logs())
+    logger.info(gateway.container.logs())

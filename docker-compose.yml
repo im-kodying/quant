@@ -5,7 +5,7 @@ services:
     build:
       context: docker-ibkr/latest
       tags:
-        - "quant-container-store:latest"
+        - "ibkr-gateway:latest"
     image: ghcr.io/gnzsnz/docker-ibkr:latest
     environment:
       TWS_USERID: ${TWS_USERID}

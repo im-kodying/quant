@@ -23,6 +23,7 @@ phases:
       - echo "$(ls)"
       - docker build -f=nautilus_trader.dockerfile -m=36g -t $IMAGE_REPO_NAME:$IMAGE_TAG --progress=plain .
       - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
+      - docker compose build
   post_build:
     commands:
       - echo Build completed on `date`
