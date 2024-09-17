@@ -21,23 +21,28 @@ logger.setLevel("INFO")
 
 def main():
     logger.info("Starting Quant Trading Platform . . .")
-    gateway_config = DockerizedIBGatewayConfig(
-        username="imkodying",
-        password="cvNQOH3qRAT3ze8F5yr4",
-        trading_mode="paper",
-    )
+    try:
+        gateway_config = DockerizedIBGatewayConfig(
+            username="imkodying",
+            password="cvNQOH3qRAT3ze8F5yr4",
+            trading_mode="paper",
+        )
 
-    # This may take a short while to start up, especially the first time
-    gateway = DockerizedIBGateway(
-        config=gateway_config
-    )
-    gateway.start()
+        # This may take a short while to start up, especially the first time
+        gateway = DockerizedIBGateway(
+            config=gateway_config
+        )
+        gateway.start()
 
-    # Confirm you are logged in
-    logger.info(gateway.is_logged_in(gateway.container))
+        # Confirm you are logged in
+        logger.info(gateway.is_logged_in(gateway.container))
 
-    # Inspect the logs
-    logger.info(gateway.container.logs())
+        # Inspect the logs
+        logger.info(gateway.container.logs())
+    except Exception as e:
+        logger.error("IB Gateway Exception occurred: {}".format(e))
+
+
     host = "127.0.0.1"
     port = 4002
     instrument_provider_config = InteractiveBrokersInstrumentProviderConfig(
