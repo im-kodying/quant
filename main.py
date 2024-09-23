@@ -12,8 +12,6 @@ from nautilus_trader.adapters.interactive_brokers.config import IBMarketDataType
 from nautilus_trader.adapters.interactive_brokers.config import InteractiveBrokersDataClientConfig
 from nautilus_trader.adapters.interactive_brokers.config import InteractiveBrokersInstrumentProviderConfig
 from nautilus_trader.adapters.interactive_brokers.common import IBContract
-from nautilus_trader.adapters.interactive_brokers.config import DockerizedIBGatewayConfig
-from nautilus_trader.adapters.interactive_brokers.gateway import DockerizedIBGateway
 
 logger = logging.getLogger()
 logger.setLevel("INFO")
@@ -21,28 +19,6 @@ logger.setLevel("INFO")
 
 def main():
     logger.info("Starting Quant Trading Platform . . .")
-    try:
-        gateway_config = DockerizedIBGatewayConfig(
-            username="imkodying",
-            password="cvNQOH3qRAT3ze8F5yr4",
-            trading_mode="paper",
-        )
-
-        # This may take a short while to start up, especially the first time
-        gateway = DockerizedIBGateway(
-            config=gateway_config
-        )
-        gateway.start()
-
-        # Confirm you are logged in
-        logger.info(gateway.is_logged_in(gateway.container))
-
-        # Inspect the logs
-        logger.info(gateway.container.logs())
-    except Exception as e:
-        logger.error("IB Gateway Exception occurred: {}".format(e))
-
-
     host = "127.0.0.1"
     port = 4002
     instrument_provider_config = InteractiveBrokersInstrumentProviderConfig(
@@ -69,18 +45,16 @@ def main():
         ),
     )
     data_client_config = InteractiveBrokersDataClientConfig(
-        ibg_port=None,
-        ibg_host=None,
-        gateway=gateway,
+        ibg_port=port,
+        ibg_host=host,
         handle_revised_bars=False,
         use_regular_trading_hours=True,
         market_data_type=IBMarketDataTypeEnum.DELAYED_FROZEN,  # Default is REALTIME if not set
         instrument_provider=instrument_provider_config,
     )
     exec_client_config = InteractiveBrokersExecClientConfig(
-        ibg_port=None,
-        ibg_host=None,
-        gateway=gateway,
+        ibg_port=port,
+        ibg_host=host,
         account_id="DU123456",  # Must match the connected IB Gateway/TWS
         instrument_provider=instrument_provider_config,
         routing=RoutingConfig(

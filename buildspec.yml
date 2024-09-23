@@ -21,10 +21,8 @@ phases:
       - export BUILDKIT_PROGRESS=plain
       - export PROGRESS_NO_TRUNC=1
       - echo "$(ls)"
-      - docker build -f=nautilus_trader.dockerfile -m=36g -t $IMAGE_REPO_NAME:$IMAGE_TAG --progress=plain .
-      - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
       - docker compose build
-      - docker tag ibkr-gateway:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/ibkr-gateway:$IMAGE_TAG
+      - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
   post_build:
     commands:
       - echo Build completed on `date`

@@ -57,9 +57,6 @@ FROM base AS application
 
 COPY --from=builder /usr/local/lib/python3.12/site-packages /usr/local/lib/python3.12/site-packages
 
-COPY ibkr.py .
-RUN python ibkr.py
-
 COPY main.py .
 
 CMD ["python", "main.py"]
