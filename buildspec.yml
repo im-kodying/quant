@@ -4,8 +4,10 @@ env:
   variables:
     AWS_DEFAULT_REGION: "us-east-2"  # Set your AWS region here
     AWS_ACCOUNT_ID: "009160041388"   # Set your AWS account ID here
-    IMAGE_REPO_NAME: "quant-container-store"
-    IMAGE_TAG: "latest"
+    PLATFORM_IMAGE_NAME: "quant-container-store"
+    PLATFORM_TAG: "latest"
+    GATEWAY_IMAGE_NAME: "ibkr-gateway"
+    GATEWAY_TAG: "latest"
 
 phases:
   pre_build:
@@ -21,12 +23,13 @@ phases:
       - export BUILDKIT_PROGRESS=plain
       - export PROGRESS_NO_TRUNC=1
       - echo "$(ls)"
+      - docker build -t $PLATFORM_IMAGE_NAME:$PLATFORM_TAG --progress=plain .
+      - docker tag $PLATFORM_IMAGE_NAME:$PLATFORM_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$PLATFORM_IMAGE_NAME:$PLATFORM_TAG
       - docker compose build
-      - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
+      - docker tag $GATEWAY_IMAGE_NAME:$GATEWAY_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$GATEWAY_IMAGE_NAME:$GATEWAY_TAG
   post_build:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
-      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
-      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/ibkr-gateway:$IMAGE_TAG
-      - printf '[{"name":"hello-world","imageUri":"%s"}]' $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG > imagedefinitions.json
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$PLATFORM_IMAGE_NAME:$PLATFORM_TAG
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$GATEWAY_IMAGE_NAME:$GATEWAY_TAG

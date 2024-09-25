@@ -50,7 +50,7 @@ jobs:
         id: docker_build_trader_nightly
         uses: docker/build-push-action@v5
         with:
-          file: ".docker/nautilus_trader.dockerfile"
+          file: ".docker/Dockerfile"
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/nautilus_trader:nightly
           cache-from: type=gha
@@ -63,7 +63,7 @@ jobs:
         id: docker_build_trader_latest
         uses: docker/build-push-action@v5
         with:
-          file: ".docker/nautilus_trader.dockerfile"
+          file: ".docker/Dockerfile"
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/nautilus_trader:latest
           cache-from: type=gha
