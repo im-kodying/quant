@@ -8,11 +8,11 @@ services:
         - "ibkr-gateway:latest"
     image: ghcr.io/gnzsnz/docker-ibkr:latest
     environment:
-      TWS_USERID: ${TWS_USERID}
-      TWS_PASSWORD: ${TWS_PASSWORD}
-      TRADING_MODE: paper
-      TWS_USERID_PAPER: ${TWS_USERID_PAPER:-}
-      TWS_PASSWORD_PAPER: ${TWS_PASSWORD_PAPER:-}
+      TWS_USERID: "imkodying"
+      TWS_PASSWORD: "cvNQOH3qRAT3ze8F5yr4"
+      TRADING_MODE: "both"
+      TWS_USERID_PAPER: "imkodying"
+      TWS_PASSWORD_PAPER: "cvNQOH3qRAT3ze8F5yr4"
       TWS_SETTINGS_PATH: ${TWS_SETTINGS_PATH:-}
       TWS_ACCEPT_INCOMING: ${TWS_ACCEPT_INCOMING:-manual}
       READ_ONLY_API: ${READ_ONLY_API:-}
