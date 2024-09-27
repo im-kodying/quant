@@ -10,7 +10,7 @@ services:
     environment:
       TWS_USERID: "imkodying"
       TWS_PASSWORD: "cvNQOH3qRAT3ze8F5yr4"
-      TRADING_MODE: "both"
+      TRADING_MODE: "paper"
       TWS_USERID_PAPER: "imkodying"
       TWS_PASSWORD_PAPER: "cvNQOH3qRAT3ze8F5yr4"
       TWS_SETTINGS_PATH: ${TWS_SETTINGS_PATH:-}
