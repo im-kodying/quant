@@ -19,8 +19,8 @@ logger.setLevel("INFO")
 
 def main():
     logger.info("Starting Quant Trading Platform . . .")
-    host = "127.0.0.1"
-    port = 4004
+    host = "0.0.0.0"
+    port = 4002
     instrument_provider_config = InteractiveBrokersInstrumentProviderConfig(
         build_futures_chain=False,  # Set to True if fetching futures
         build_options_chain=False,  # Set to True if fetching options
