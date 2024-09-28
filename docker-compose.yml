@@ -4,8 +4,6 @@ services:
     restart: always
     build:
       context: docker-ibkr/latest
-      env_file:
-        - .env
       tags:
         - "ibkr-gateway:latest"
     image: ghcr.io/gnzsnz/docker-ibkr:latest
