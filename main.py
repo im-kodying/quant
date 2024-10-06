@@ -3,27 +3,27 @@ import datetime
 import logging
 from decimal import Decimal
 
-from nautilus_trader.nautilus_trader.adapters.interactive_brokers.common import IB_VENUE
-from nautilus_trader.nautilus_trader.adapters.interactive_brokers.factories import InteractiveBrokersLiveDataClientFactory
-from nautilus_trader.nautilus_trader.adapters.interactive_brokers.factories import InteractiveBrokersLiveExecClientFactory
-from nautilus_trader.nautilus_trader.config import LiveDataEngineConfig
-from nautilus_trader.nautilus_trader.config import LoggingConfig
-from nautilus_trader.nautilus_trader.config import TradingNodeConfig
-from nautilus_trader.nautilus_trader.live.node import TradingNode
-from nautilus_trader.nautilus_trader.adapters.interactive_brokers.config import InteractiveBrokersExecClientConfig
-from nautilus_trader.nautilus_trader.config import RoutingConfig
-from nautilus_trader.nautilus_trader.adapters.interactive_brokers.config import IBMarketDataTypeEnum
-from nautilus_trader.nautilus_trader.adapters.interactive_brokers.config import InteractiveBrokersDataClientConfig
-from nautilus_trader.nautilus_trader.adapters.interactive_brokers.config import InteractiveBrokersInstrumentProviderConfig
-from nautilus_trader.nautilus_trader.adapters.interactive_brokers.common import IBContract
-from nautilus_trader.nautilus_trader.adapters.interactive_brokers.historic.client import \
+from nautilus_trader.adapters.interactive_brokers.common import IB_VENUE
+from nautilus_trader.adapters.interactive_brokers.factories import InteractiveBrokersLiveDataClientFactory
+from nautilus_trader.adapters.interactive_brokers.factories import InteractiveBrokersLiveExecClientFactory
+from nautilus_trader.config import LiveDataEngineConfig
+from nautilus_trader.config import LoggingConfig
+from nautilus_trader.config import TradingNodeConfig
+from nautilus_trader.live.node import TradingNode
+from nautilus_trader.adapters.interactive_brokers.config import InteractiveBrokersExecClientConfig
+from nautilus_trader.config import RoutingConfig
+from nautilus_trader.adapters.interactive_brokers.config import IBMarketDataTypeEnum
+from nautilus_trader.adapters.interactive_brokers.config import InteractiveBrokersDataClientConfig
+from nautilus_trader.adapters.interactive_brokers.config import InteractiveBrokersInstrumentProviderConfig
+from nautilus_trader.adapters.interactive_brokers.common import IBContract
+from nautilus_trader.adapters.interactive_brokers.historic.client import \
     HistoricInteractiveBrokersClient
-from nautilus_trader.nautilus_trader.backtest.config import BacktestVenueConfig, BacktestDataConfig, BacktestRunConfig, \
+from nautilus_trader.backtest.config import BacktestVenueConfig, BacktestDataConfig, BacktestRunConfig, \
     BacktestEngineConfig
-from nautilus_trader.nautilus_trader.backtest.node import BacktestNode
-from nautilus_trader.nautilus_trader.model.data import QuoteTick
-from nautilus_trader.nautilus_trader.persistence.catalog.parquet import ParquetDataCatalog
-from nautilus_trader.nautilus_trader.trading.config import ImportableStrategyConfig
+from nautilus_trader.backtest.node import BacktestNode
+from nautilus_trader.model.data import QuoteTick
+from nautilus_trader.persistence.catalog.parquet import ParquetDataCatalog
+from nautilus_trader.trading.config import ImportableStrategyConfig
 
 logger = logging.getLogger()
 logger.setLevel("INFO")
@@ -174,8 +174,8 @@ async def main_backtest():
 
     strategies = [
         ImportableStrategyConfig(
-            strategy_path="nautilus_trader.nautilus_trader.examples.strategies.ema_cross:EMACross",
-            config_path="nautilus_trader.nautilus_trader.examples.strategies.ema_cross:EMACrossConfig",
+            strategy_path="nautilus_trader.examples.strategies.ema_cross:EMACross",
+            config_path="nautilus_trader.examples.strategies.ema_cross:EMACrossConfig",
             config={
                 "instrument_id": instrument.id,
                 "bar_type": "EUR/USD.SIM-15-MINUTE-BID-INTERNAL",
