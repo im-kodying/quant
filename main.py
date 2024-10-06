@@ -30,7 +30,7 @@ logger.setLevel("INFO")
 
 
 async def main_live():
-    logger.info("Starting Quant Trading Platform . . .")
+    logger.info("Kody: Starting Quant Trading Platform . . .")
     host = "127.0.0.1"
     port = 4002
     instrument_provider_config = InteractiveBrokersInstrumentProviderConfig(
@@ -195,7 +195,7 @@ async def main_backtest():
     node = BacktestNode(configs=[config])
 
     results = node.run()
-    logger.info(results)
+    logger.info("Kody", results)
 
 
 async def main():
