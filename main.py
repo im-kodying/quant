@@ -1,23 +1,35 @@
+import asyncio
+import datetime
 import logging
-from nautilus_trader.adapters.interactive_brokers.common import IB_VENUE
-from nautilus_trader.adapters.interactive_brokers.factories import InteractiveBrokersLiveDataClientFactory
-from nautilus_trader.adapters.interactive_brokers.factories import InteractiveBrokersLiveExecClientFactory
-from nautilus_trader.config import LiveDataEngineConfig
-from nautilus_trader.config import LoggingConfig
-from nautilus_trader.config import TradingNodeConfig
-from nautilus_trader.live.node import TradingNode
-from nautilus_trader.adapters.interactive_brokers.config import InteractiveBrokersExecClientConfig
-from nautilus_trader.config import RoutingConfig
-from nautilus_trader.adapters.interactive_brokers.config import IBMarketDataTypeEnum
-from nautilus_trader.adapters.interactive_brokers.config import InteractiveBrokersDataClientConfig
-from nautilus_trader.adapters.interactive_brokers.config import InteractiveBrokersInstrumentProviderConfig
-from nautilus_trader.adapters.interactive_brokers.common import IBContract
+from decimal import Decimal
+
+from nautilus_trader.nautilus_trader.adapters.interactive_brokers.common import IB_VENUE
+from nautilus_trader.nautilus_trader.adapters.interactive_brokers.factories import InteractiveBrokersLiveDataClientFactory
+from nautilus_trader.nautilus_trader.adapters.interactive_brokers.factories import InteractiveBrokersLiveExecClientFactory
+from nautilus_trader.nautilus_trader.config import LiveDataEngineConfig
+from nautilus_trader.nautilus_trader.config import LoggingConfig
+from nautilus_trader.nautilus_trader.config import TradingNodeConfig
+from nautilus_trader.nautilus_trader.live.node import TradingNode
+from nautilus_trader.nautilus_trader.adapters.interactive_brokers.config import InteractiveBrokersExecClientConfig
+from nautilus_trader.nautilus_trader.config import RoutingConfig
+from nautilus_trader.nautilus_trader.adapters.interactive_brokers.config import IBMarketDataTypeEnum
+from nautilus_trader.nautilus_trader.adapters.interactive_brokers.config import InteractiveBrokersDataClientConfig
+from nautilus_trader.nautilus_trader.adapters.interactive_brokers.config import InteractiveBrokersInstrumentProviderConfig
+from nautilus_trader.nautilus_trader.adapters.interactive_brokers.common import IBContract
+from nautilus_trader.nautilus_trader.adapters.interactive_brokers.historic.client import \
+    HistoricInteractiveBrokersClient
+from nautilus_trader.nautilus_trader.backtest.config import BacktestVenueConfig, BacktestDataConfig, BacktestRunConfig, \
+    BacktestEngineConfig
+from nautilus_trader.nautilus_trader.backtest.node import BacktestNode
+from nautilus_trader.nautilus_trader.model.data import QuoteTick
+from nautilus_trader.nautilus_trader.persistence.catalog.parquet import ParquetDataCatalog
+from nautilus_trader.nautilus_trader.trading.config import ImportableStrategyConfig
 
 logger = logging.getLogger()
 logger.setLevel("INFO")
 
 
-def main():
+async def main_live():
     logger.info("Starting Quant Trading Platform . . .")
     host = "127.0.0.1"
     port = 4002
@@ -83,6 +95,111 @@ def main():
         node.dispose()
     return
 
+async def main_backtest():
+    host = "127.0.0.1"
+    port = 4002
+    contract = IBContract(
+        secType="STK",
+        symbol="AAPL",
+        exchange="SMART",
+        primaryExchange="NASDAQ",
+    )
+    instrument_id = "TSLA.NASDAQ"
+
+    client = HistoricInteractiveBrokersClient(host=host, port=port, client_id=5)
+    await client.connect()
+    await asyncio.sleep(2)
+
+    start = datetime.datetime(2023, 11, 6, 10, 0)
+    end = datetime.datetime(2023, 11, 6, 16, 30)
+
+    instruments = await client.request_instruments(
+        contracts=[contract],
+        instrument_ids=[instrument_id],
+    )
+
+    bars = await client.request_bars(
+        bar_specifications=["1-HOUR-LAST", "30-MINUTE-MID"],
+        start_date_time=start,
+        end_date_time=end,
+        tz_name="America/New_York",
+        contracts=[contract],
+        instrument_ids=[instrument_id],
+    )
+
+    trade_ticks = await client.request_ticks(
+        "TRADES",
+        start_date_time=start,
+        end_date_time=end,
+        tz_name="America/New_York",
+        contracts=[contract],
+        instrument_ids=[instrument_id],
+    )
+
+    quote_ticks = await client.request_ticks(
+        "BID_ASK",
+        start_date_time=start,
+        end_date_time=end,
+        tz_name="America/New_York",
+        contracts=[contract],
+        instrument_ids=[instrument_id],
+    )
+
+    catalog = ParquetDataCatalog("./catalog")
+    catalog.write_data(instruments)
+    catalog.write_data(bars)
+    catalog.write_data(trade_ticks)
+    catalog.write_data(quote_ticks)
+
+    venue_configs = [
+        BacktestVenueConfig(
+            name="SIM",
+            oms_type="HEDGING",
+            account_type="MARGIN",
+            base_currency="USD",
+            starting_balances=["1_000_000 USD"],
+        ),
+    ]
+
+    instrument = catalog.instruments()[0]
+    data_configs = [
+        BacktestDataConfig(
+            catalog_path=str(ParquetDataCatalog.from_env().path),
+            data_cls=QuoteTick,
+            instrument_id=instrument.id,
+            start_time=start,
+            end_time=end,
+        ),
+    ]
+
+    strategies = [
+        ImportableStrategyConfig(
+            strategy_path="nautilus_trader.nautilus_trader.examples.strategies.ema_cross:EMACross",
+            config_path="nautilus_trader.nautilus_trader.examples.strategies.ema_cross:EMACrossConfig",
+            config={
+                "instrument_id": instrument.id,
+                "bar_type": "EUR/USD.SIM-15-MINUTE-BID-INTERNAL",
+                "fast_ema_period": 10,
+                "slow_ema_period": 20,
+                "trade_size": Decimal(1_000_000),
+            },
+        ),
+    ]
+
+    config = BacktestRunConfig(
+        engine=BacktestEngineConfig(strategies=strategies),
+        data=data_configs,
+        venues=venue_configs,
+    )
+
+    node = BacktestNode(configs=[config])
+
+    results = node.run()
+    logger.info(results)
+
+
+async def main():
+    await asyncio.gather(main_live(), main_backtest())
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())
