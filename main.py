@@ -16,8 +16,7 @@ from nautilus_trader.adapters.interactive_brokers.config import IBMarketDataType
 from nautilus_trader.adapters.interactive_brokers.config import InteractiveBrokersDataClientConfig
 from nautilus_trader.adapters.interactive_brokers.config import InteractiveBrokersInstrumentProviderConfig
 from nautilus_trader.adapters.interactive_brokers.common import IBContract
-from nautilus_trader.adapters.interactive_brokers.historic.client import \
-    HistoricInteractiveBrokersClient
+from nautilus_trader.adapters.interactive_brokers.historic import HistoricInteractiveBrokersClient
 from nautilus_trader.backtest.config import BacktestVenueConfig, BacktestDataConfig, BacktestRunConfig, \
     BacktestEngineConfig
 from nautilus_trader.backtest.node import BacktestNode
