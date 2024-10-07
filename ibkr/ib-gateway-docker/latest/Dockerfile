@@ -6,9 +6,9 @@
 ##############################################################################
 
 # hadolint global ignore=DL3008
-FROM ubuntu:22.04 AS setup
+FROM ubuntu:24.04 AS setup
 
-ENV IB_GATEWAY_VERSION=10.31.1i
+ENV IB_GATEWAY_VERSION=10.31.1m
 ENV IB_GATEWAY_RELEASE_CHANNEL=latest
 ENV IBC_VERSION=3.20.0
 
@@ -27,7 +27,6 @@ RUN apt-get update -y && \
 #COPY ibgateway-${IB_GATEWAY_VERSION}-standalone-linux-x64.sh .
   curl -sSOL https://github.com/gnzsnz/ib-gateway-docker/releases/download/ibgateway-${IB_GATEWAY_RELEASE_CHANNEL}%40${IB_GATEWAY_VERSION}/ibgateway-${IB_GATEWAY_VERSION}-standalone-linux-x64.sh && \
   curl -sSOL https://github.com/gnzsnz/ib-gateway-docker/releases/download/ibgateway-${IB_GATEWAY_RELEASE_CHANNEL}%40${IB_GATEWAY_VERSION}/ibgateway-${IB_GATEWAY_VERSION}-standalone-linux-x64.sh.sha256 && \
-    ls -a && \
   sha256sum --check ./ibgateway-${IB_GATEWAY_VERSION}-standalone-linux-x64.sh.sha256 && \
   chmod a+x ./ibgateway-${IB_GATEWAY_VERSION}-standalone-linux-x64.sh && \
   ./ibgateway-${IB_GATEWAY_VERSION}-standalone-linux-x64.sh -q -dir /root/Jts/ibgateway/${IB_GATEWAY_VERSION} &&\
@@ -48,9 +47,9 @@ COPY ./scripts /root/scripts
 # Build Stage: build production image
 ##############################################################################
 
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 
-ENV IB_GATEWAY_VERSION=10.31.1i
+ENV IB_GATEWAY_VERSION=10.31.1m
 # IB Gateway user constants
 ARG USER_ID="${USER_ID:-1000}"
 ARG USER_GID="${USER_GID:-1000}"
@@ -76,6 +75,9 @@ RUN apt-get update -y && \
   gettext-base socat xvfb x11vnc sshpass openssh-client && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/* && \
+  if id ubuntu; then \
+    userdel -rf ubuntu \
+  ;fi && \
   groupadd --gid ${USER_GID} ibgateway && \
   useradd -ms /bin/bash --uid ${USER_ID} --gid ${USER_GID} ibgateway && \
   chmod a+x ${SCRIPT_PATH}/*.sh

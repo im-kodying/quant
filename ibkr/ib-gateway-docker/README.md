@@ -35,10 +35,10 @@ Images are provided for [IB gateway][1] and [TWS][2]. With the following tags:
 
 | Image| Channel  | IB Gateway Version  | IBC Version      | Docker Tags                                    |
 | --- | -------- | ------------------- | ---------------- | ---------------------------------------------- |
-| [ib-gateway][1] | `latest` | `${LATEST_VERSION}` | `${IBC_VERSION}` | `latest` `${LATEST_MINOR}` `${LATEST_VERSION}` |
-| [ib-gateway][1] |`stable` | `${STABLE_VERSION}` | `${IBC_VERSION}` | `stable` `${STABLE_MINOR}` `${STABLE_VERSION}` |
-| [tws-rdesktop][2] | `latest` | `${LATEST_VERSION}` | `${IBC_VERSION}` | `latest` `${LATEST_MINOR}` `${LATEST_VERSION}` |
-| [tws-rdesktop][2] |`stable` | `${STABLE_VERSION}` | `${IBC_VERSION}` | `stable` `${STABLE_MINOR}` `${STABLE_VERSION}` |
+| [ib-gateway][1] | `latest` | `10.31.1m` | `3.20.0` | `latest` `10.31` `10.31.1m` |
+| [ib-gateway][1] |`stable` | `10.19.2p` | `3.20.0` | `stable` `10.19` `10.19.2p` |
+| [tws-rdesktop][2] | `latest` | `10.31.1m` | `3.20.0` | `latest` `10.31` `10.31.1m` |
+| [tws-rdesktop][2] |`stable` | `10.19.2p` | `3.20.0` | `stable` `10.19` `10.19.2p` |
 
 All tags are available in the container repository for [ib-gateway][1] and [tws-rdesktop][2]. IB Gateway and TWS share the same version numbers and tags.
 
@@ -58,8 +58,8 @@ services:
     build:
       context: ./stable
       tags:
-        - "ghcr.io/gnzsnz/docker-ibkr:stable"
-    image: ghcr.io/gnzsnz/docker-ibkr:stable
+        - "ghcr.io/gnzsnz/ib-gateway:stable"
+    image: ghcr.io/gnzsnz/ib-gateway:stable
     environment:
       TWS_USERID: ${TWS_USERID}
       TWS_PASSWORD: ${TWS_PASSWORD}
@@ -125,7 +125,7 @@ All environment variables are common between ibgateway and TWS image, unless spe
 | `AUTO_LOGOFF_TIME` | Auto-Logoff: at a specified time, TWS shuts down tidily, without restarting   | **not defined**   |
 | `TWS_COLD_RESTART` | IBC >= 3.19 set this value to <hh:mm> | **not defined** |
 | `SAVE_TWS_SETTINGS`  | automatically save its settings on a schedule of your choosing. You can specify one or more specific times, ex `SaveTwsSettingsAt=08:00   12:30 17:30`  | **not defined**  |
-| `RELOGIN_AFTER_2FA_TIMEOUT` | support relogin after timeout. See IBC [documentation](https://github.com/IbcAlpha/IBC/blob/master/userguide.md#second-factor-authentication) | no  |
+| `RELOGIN_AFTER_TWOFA_TIMEOUT` | support relogin after timeout. See IBC [documentation](https://github.com/IbcAlpha/IBC/blob/master/userguide.md#second-factor-authentication) | no  |
 | `EXISTING_SESSION_DETECTED_ACTION` | Set Existing Session Detected Action. See IBC [documentation](https://github.com/gnzsnz/ib-gateway-docker/blob/master/latest/config/ibc/config.ini.tmpl#L296-L329) | primary |
 | `ALLOW_BLIND_TRADING` | TWS displays a dialog to warn you against blind trading.See IBC [documentation](https://github.com/IbcAlpha/IBC/blob/c98d0bcc2ead9b8ab3900a23a707f01f8fd7dfbc/resources/config.ini#L702)| no |
 | `TIME_ZONE`  | Support for timezone, see your TWS jts.ini file for [valid values](https://ibkrguides.com/tws/usersguidebook/configuretws/configgeneral.htm) on a [tz database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). This sets time zone for IB Gateway. If jts.ini exists it will not be set. if `TWS_SETTINGS_PATH` is set and stored in a volume, jts.ini will already exists so this will not be used. Examples `Europe/Paris`, `America/New_York`, `Asia/Tokyo` | "Etc/UTC"  |
@@ -143,7 +143,7 @@ All environment variables are common between ibgateway and TWS image, unless spe
 | `SSH_USER_TUNNEL`   | `user@server` to connect to    | **not defined**   |
 | `SSH_RESTART`  | Number of seconds to wait before restarting tunnel in case of disconnection.  | 5  |
 | `SSH_VNC_PORT`   | If set, then a remote ssh tunnel will be created with remote port equal to `SSH_VNC_PORT`. Specific to ibgateway, ignored by TWS.  | **not defined**   |
-| `SSH_DRP_PORT`  | If set, then a remote ssh tunnel will be created with remote port equal to `SSH_DRP_PORT`. Specific to TWS, ignored by ibgateway.  | **not defined** |
+| `SSH_RDP_PORT`  | If set, then a remote ssh tunnel will be created with remote port equal to `SSH_RDP_PORT`. Specific to TWS, ignored by ibgateway.  | **not defined** |
 | `PUID` | User `uid` for user `abc` (linuxserver default user name). Specific to TWS, ignored by ibgateway. | 1000   |
 | `PGID` | User `gid` for user `abc` (linuxserver default user name). Specific to TWS, ignored by ibgateway.  | 1000   |
 | `PASSWD` | Password for user `abc` (linuxserver default user name). Specific to TWS, ignored by ibgateway. | abc  |
@@ -154,7 +154,7 @@ Create an .env on root directory. Example .env file:
 ```bash
 TWS_USERID=myTwsAccountName
 TWS_PASSWORD=myTwsPassword
-# docker-ibkr
+# ib-gateway
 #TWS_SETTINGS_PATH=/home/ibgateway/Jts
 # tws
 #TWS_SETTINGS_PATH=/config/tws_settings
@@ -170,7 +170,7 @@ AUTO_RESTART_TIME=11:59 PM
 AUTO_LOGOFF_TIME=
 TWS_COLD_RESTART=
 SAVE_TWS_SETTINGS=
-RELOGIN_AFTER_2FA_TIMEOUT=yes
+RELOGIN_AFTER_TWOFA_TIMEOUT=yes
 EXISTING_SESSION_DETECTED_ACTION=primary
 ALLOW_BLIND_TRADING=no
 TIME_ZONE=Europe/Zurich
@@ -265,8 +265,8 @@ Sample settings:
     volumes:
       - ${PWD}/config.ini:/home/ibgateway/ibc/config.ini
       - ${PWD}/jts.ini:/home/ibgateway/Jts/jts.ini # for IB Gateway
-      - ${PWD}/jts.ini:/opt/docker-ibkr/jts.ini # for TWS
-      - ${PWD}/config.ini:/opt/ibc/ibc/config.ini # for TWS
+      - ${PWD}/jts.ini:/opt/ibkr/jts.ini # for TWS
+      - ${PWD}/config.ini:/opt/ibc/config.ini # for TWS
 ...
 ```
 
@@ -494,7 +494,7 @@ time, which will allow you to trust it in your RDP client.
 In case you experience problems with the API connection, you can restart the `socat` process
 
 ```bash
-docker exec -it algo-trader-docker-ibkr-1 pkill -x socat
+docker exec -it algo-trader-ib-gateway-1 pkill -x socat
 ```
 
 After `SSH_RESTART` seconds socat will restart the connection. If `SSH_RESTART`
@@ -503,10 +503,10 @@ is not set, by default the restart period will be 5 seconds.
 For ssh tunnel,
 
 ```bash
-docker exec -it algo-trader-docker-ibkr-1 pkill -x ssh
+docker exec -it algo-trader-ib-gateway-1 pkill -x ssh
 ```
 
-The ssh tunnel will restart after 5 seconds if `SSH_RESTART` is not set, of the
+The ssh tunnel will restart after 5 seconds if `SSH_RESTART` is not set, or the
 value in seconds defined in `SSH_RESTART`.
 
 ## IB Gateway installation files
@@ -568,7 +568,7 @@ https://github.com/gnzsnz/ib-gateway-docker/raw/gh-pages/ibgateway-releases/ibga
    `ibgateway-${IB_GATEWAY_VERSION}-standalone-linux-x64.sh`, where
    `{IB_GATEWAY_VERSION}` must match the version as configured on Dockerfile
    (first line)
-1. Download IBC and name the file `IBCLinux-${IBC_VERSION}.zip`, where
+1. Download IBC and name the file `IBCLinux-3.20.0.zip`, where
    `{IBC_VERSION}` must match the version as configured on Dockerfile
 1. Build and run: `docker-compose up --build`
 

@@ -5,8 +5,8 @@ services:
     build:
       context: ./latest
       tags:
-        - "ghcr.io/gnzsnz/docker-ibkr:latest"
-    image: ghcr.io/gnzsnz/docker-ibkr:latest
+        - "ghcr.io/gnzsnz/ib-gateway:latest"
+    image: ghcr.io/gnzsnz/ib-gateway:latest
     environment:
       TWS_USERID: ${TWS_USERID}
       TWS_PASSWORD: ${TWS_PASSWORD}

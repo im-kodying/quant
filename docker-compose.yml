@@ -3,13 +3,13 @@ services:
   ib-gateway:
     restart: always
     build:
-      context: docker-ibkr/latest
+      context: ./ibkr/ib-gateway-docker/stable
       tags:
         - "ibkr-gateway:latest"
-    image: ghcr.io/gnzsnz/docker-ibkr:latest
+    image: ghcr.io/gnzsnz/ib-gateway:stable
     environment:
-      TWS_USERID: "imkodying"
-      TWS_PASSWORD: "cvNQOH3qRAT3ze8F5yr4"
+      TWS_USERID: ${TWS_USERID}
+      TWS_PASSWORD: ${TWS_PASSWORD}
       TRADING_MODE: ${TRADING_MODE:-paper}
       TWS_SETTINGS_PATH: ${TWS_SETTINGS_PATH:-}
       TWS_ACCEPT_INCOMING: ${TWS_ACCEPT_INCOMING:-}
@@ -23,6 +23,7 @@ services:
       SAVE_TWS_SETTINGS: ${SAVE_TWS_SETTINGS:-}
       RELOGIN_AFTER_TWOFA_TIMEOUT: ${RELOGIN_AFTER_TWOFA_TIMEOUT:-no}
       TWOFA_EXIT_INTERVAL: ${TWOFA_EXIT_INTERVAL:-60}
+      TWOFA_DEVICE: ${TWOFA_DEVICE:-}
       EXISTING_SESSION_DETECTED_ACTION: ${EXISTING_SESSION_DETECTED_ACTION:-primary}
       ALLOW_BLIND_TRADING: ${ALLOW_BLIND_TRADING:-no}
       TIME_ZONE: ${TIME_ZONE:-Etc/UTC}
@@ -38,12 +39,12 @@ services:
       SSH_USER_TUNNEL: ${SSH_USER_TUNNEL:-}
       SSH_RESTART: ${SSH_RESTART:-}
       SSH_VNC_PORT: ${SSH_VNC_PORT:-}
-    volumes:
-      - ${PWD}/jts.ini:/home/ibgateway/Jts/jts.ini
-      - ${PWD}/config.ini:/home/ibgateway/ibc/config.ini
-      - ${PWD}/tws_settings/:${TWS_SETTINGS_PATH:-/home/ibgateway/Jts}
-      - ${PWD}/ssh/:/home/ibgateway/.ssh
+#    volumes:
+#      - ${PWD}/jts.ini:/home/ibgateway/Jts/jts.ini
+#      - ${PWD}/config.ini:/home/ibgateway/ibc/config.ini
+#      - ${PWD}/tws_settings/:${TWS_SETTINGS_PATH:-/home/ibgateway/Jts}
+#      - ${PWD}/ssh/:/home/ibgateway/.ssh
     ports:
-      - "4001:4003"
-      - "4002:4004"
-      - "5900:5900"
+      - "127.0.0.1:4001:4003"
+      - "127.0.0.1:4002:4004"
+      - "127.0.0.1:5900:5900"
