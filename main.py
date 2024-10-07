@@ -98,7 +98,7 @@ async def main_live():
 async def main_backtest():
     logger.warning("Kody: Backtest Started")
     host = "127.0.0.1"
-    port = 4004
+    port = 4002
     contract = IBContract(
         secType="STK",
         symbol="AAPL",
