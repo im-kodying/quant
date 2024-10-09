@@ -130,7 +130,7 @@ def find_listening_port(
         return -1
 
     if port_range is None:
-        port_range = (6000, 65534)
+        port_range = (4000, 65534)
 
     if socket_type == 'tcp':
         socket_protocol = socket.SOCK_STREAM
@@ -146,17 +146,13 @@ def find_listening_port(
             return port
         searched_ports.append(default)
 
-    for _ in range(100):
-        port = random.randint(port_range[0], port_range[1])
-        if port in searched_ports:
-            continue
-
+    for port in range(port_range[0], port_range[1]):
         port = _test_port(host, port, socket_protocol)
         if port != -1:
             return port
 
         searched_ports.append(port)
-
+    logger.warning(f"Kody: No Ports Found. Searched ports: {searched_ports}")
     raise Exception(f'Failed to find {socket_type} listening port for host={host}')
 
 
