@@ -263,6 +263,7 @@ async def main_backtest(port):
 async def main():
     asyncio.sleep(600)
     port = find_listening_port(host="127.0.0.1")
+    logger.warning(f"Open Port found! {port}")
     await asyncio.gather(main_live(), main_backtest(port))
     return
 
