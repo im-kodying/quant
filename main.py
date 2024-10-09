@@ -23,6 +23,9 @@ from nautilus_trader.backtest.node import BacktestNode
 from nautilus_trader.model.data import QuoteTick
 from nautilus_trader.persistence.catalog.parquet import ParquetDataCatalog
 from nautilus_trader.trading.config import ImportableStrategyConfig
+import socket
+import random
+from typing import Tuple
 
 logger = logging.getLogger()
 logger.setLevel("INFO")
@@ -95,10 +98,71 @@ async def main_live():
     return
 
 
-async def main_backtest():
+def find_listening_port(
+        port_range: Tuple[int, int] = None,
+        host='',
+        socket_type='tcp',
+        default: int = None
+) -> int:
+    """Find an available listening port
+
+    Arguments:
+        port_range: Optional tuple of ports to randomly search, ``[min_port, max_port]``
+            If omitted, then randomly search between ``[6000, 65534]``
+        host: Host interface to search, if omitted then bind to all interfaces
+        socket_type: The socket type, this should be ``tcp`` or ``udp``
+        default: The port to try first before randomly searching the port range
+
+    Returns:
+        Available port for listening
+    """
+
+    def _test_port(host, port, socket_protocol):
+        with socket.socket(socket.AF_INET, socket_protocol) as sock:
+            try:
+                sock.bind((host, port))
+                if socket_type == 'tcp':
+                    sock.listen(1)
+                return port
+            except:
+                pass
+
+        return -1
+
+    if port_range is None:
+        port_range = (6000, 65534)
+
+    if socket_type == 'tcp':
+        socket_protocol = socket.SOCK_STREAM
+    elif socket_type == 'udp':
+        socket_protocol = socket.SOCK_DGRAM
+    else:
+        raise Exception('Invalid socket_type argument, must be: tcp or udp')
+
+    searched_ports = []
+    if default is not None:
+        port = _test_port(host, default, socket_protocol)
+        if port != -1:
+            return port
+        searched_ports.append(default)
+
+    for _ in range(100):
+        port = random.randint(port_range[0], port_range[1])
+        if port in searched_ports:
+            continue
+
+        port = _test_port(host, port, socket_protocol)
+        if port != -1:
+            return port
+
+        searched_ports.append(port)
+
+    raise Exception(f'Failed to find {socket_type} listening port for host={host}')
+
+
+async def main_backtest(port):
     logger.warning("Kody: Backtest Started")
     host = "127.0.0.1"
-    port = 4002
     contract = IBContract(
         secType="STK",
         symbol="AAPL",
@@ -201,7 +265,8 @@ async def main_backtest():
 
 
 async def main():
-    await asyncio.gather(main_live(), main_backtest())
+    port = find_listening_port(host="127.0.0.1")
+    await asyncio.gather(main_live(), main_backtest(port))
     return
 
 
