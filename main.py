@@ -158,7 +158,7 @@ def find_listening_port(
 
 async def main_backtest(port):
     logger.warning("Kody: Backtest Started")
-    host = "172.31.30.97"
+    host = "localhost"
     contract = IBContract(
         secType="STK",
         symbol="AAPL",
@@ -261,8 +261,8 @@ async def main_backtest(port):
 
 
 async def main():
-    await asyncio.sleep(600)
-    port = find_listening_port(host="172.31.30.97")
+    await asyncio.sleep(300)
+    port = find_listening_port(host="localhost")
     logger.warning(f"Open Port found! {port}")
     await asyncio.gather(main_live(), main_backtest(port))
     return
