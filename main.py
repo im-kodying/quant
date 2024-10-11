@@ -130,7 +130,7 @@ def find_listening_port(
         return -1
 
     if port_range is None:
-        port_range = (4000, 65534)
+        port_range = (4001, 65534)
 
     if socket_type == 'tcp':
         socket_protocol = socket.SOCK_STREAM
